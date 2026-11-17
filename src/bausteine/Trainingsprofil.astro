@@ -1,9 +1,11 @@
 ---
 // Trainingsprofil einer Einheit: ein Balken je Schritt, Breite = Dauer, Höhe = % FTP, Farbe = Zone; die gestrichelte Linie ist 100 % FTP.
 // Feste Watt und freie Abschnitte sind grau. Der Hinweis am Balken (data-tip) kommt aus skripte/hinweis.ts;
-// ohne JavaScript zeigt der Browser den <title> des Balkens.
+// ohne JavaScript zeigt der Browser den <title> des Balkens. Für Tastatur und Vorleser stehen dieselben Angaben
+// als visuell versteckte Liste der Schritte hinter dem Bild (gleiche Schritte in Folge sind zusammengefasst).
+// Das Bild selbst hat deshalb nur die kurze Beschriftung.
 import type { Training } from '../plaene/leser';
-import { profil, spanneProzent } from '../plaene/profil';
+import { profil, spanneProzent, schritteText } from '../plaene/profil';
 interface Props { training: Training }
 const { training } = Astro.props;
 const B = 1000;
@@ -26,3 +28,4 @@ const beschriftung = `Trainingsprofil ${training.name}: ${Math.round(training.se
   + (grau ? (spanne ? ', teils frei oder in festen Watt' : ', frei oder in festen Watt') : '');
 ---
 <span class="wprof"><svg viewBox={`0 0 ${B} ${H}`} preserveAspectRatio="none" role="img" aria-label={beschriftung}>{rechtecke.map((r) => <rect class={r.klasse} x={r.x} y={r.y} width={r.breite} height={r.hoehe} data-tip={r.titel}><title>{r.titel}</title></rect>)}<path class="ftp" d={`M0 ${H - (100 / 150) * H}h${B}`}/></svg><i class="cover"></i></span>
+<span class="vh">Schritte: {schritteText(balken)}.</span>

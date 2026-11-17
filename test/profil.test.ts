@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { profil, zone } from '../src/plaene/profil';
+import { profil, zone, schritteText } from '../src/plaene/profil';
 import type { Schritt, Training } from '../src/plaene/leser';
 
 const training = (schritte: Schritt[]): Training => ({
@@ -88,5 +88,17 @@ describe('Trainingsprofil', () => {
       { art: 'rampe', sekunden: 300, von: ftp(60), bis: ftp(45) },
     ]);
     expect(summe(t)).toBeCloseTo(1, 9);
+  });
+});
+
+describe('Schritte als Text', () => {
+  it('nennt jede Rampe einmal und fasst gleiche Schritte in Folge zusammen', () => {
+    const t = training([
+      { art: 'rampe', sekunden: 600, von: ftp(50), bis: ftp(75), rolle: 'einfahren' },
+      { art: 'gleich', sekunden: 300, leistung: ftp(90) },
+      { art: 'gleich', sekunden: 300, leistung: ftp(90) },
+      { art: 'frei', sekunden: 120 },
+    ]);
+    expect(schritteText(profil(t))).toBe('Einfahren · 10 min · 50–75 % FTP; 2 × Zone 3 · 5 min · 90 % FTP; frei · 2 min');
   });
 });

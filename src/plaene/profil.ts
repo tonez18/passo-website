@@ -85,3 +85,16 @@ export function spanneProzent(balken: Balken[]): { min: number; max: number } | 
   const werte = balken.flatMap((b) => (b.prozent === undefined ? [] : [b.prozent]));
   return werte.length ? { min: Math.round(Math.min(...werte)), max: Math.round(Math.max(...werte)) } : null;
 }
+
+/** Die Schritte als ein Satz für Vorleser und Tastatur: Titel der Balken mit „; “ verbunden.
+ *  Die Stufen einer Rampe zählen einmal; gleiche Schritte in Folge werden zu „3 × …“. */
+export function schritteText(balken: Balken[]): string {
+  const schritte: { titel: string; mal: number }[] = [];
+  for (const b of balken) {
+    if (b.anschluss) continue;
+    const letzter = schritte[schritte.length - 1];
+    if (letzter && letzter.titel === b.titel) letzter.mal++;
+    else schritte.push({ titel: b.titel, mal: 1 });
+  }
+  return schritte.map((s) => (s.mal > 1 ? s.mal + ' × ' : '') + s.titel).join('; ');
+}
