@@ -11,7 +11,7 @@ import ImportSchritte from '../../bausteine/ImportSchritte.astro';
 import { sammlePlaene, type Eintrag } from '../../plaene/sammlung';
 import { WOCHENTAGE } from '../../plaene/leser';
 import { skala, werte, textBloecke } from '../../plaene/darstellung';
-import { pfad } from '../../einstellungen';
+import { pfad, absolut } from '../../einstellungen';
 
 export const getStaticPaths = (async () => {
   const alle = await sammlePlaene();
@@ -30,11 +30,21 @@ const datei = slug + '.passoplan';
 const laden = pfad('/plaene/' + datei);
 const einheiten = (n: number) => (n === 1 ? '1 Einheit' : n + ' Einheiten');
 const text = eintrag.text ? textBloecke(eintrag.text) : [];
+const brotkrumen = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Passo', item: absolut('/') },
+    { '@type': 'ListItem', position: 2, name: 'Pläne', item: absolut('/plaene/') },
+    { '@type': 'ListItem', position: 3, name: plan.name, item: absolut(`/plaene/${slug}/`) },
+  ],
+};
 ---
 <Seite
-  titel={eintrag.seoTitel ?? `${plan.name} – Trainingsplan für Passo`}
+  titel={eintrag.seoTitel ?? `${plan.name} – Trainingsplan, ${wochenText} | Passo`}
   beschreibung={plan.beschreibung || `${plan.name}: Trainingsplan für Passo über ${wochenText}.`}
   pfadname={`/plaene/${slug}/`}
+  jsonLd={[brotkrumen]}
   position={`Start · ${wochenText}`}
 >
 <div class="page" id="page" data-spur="links">

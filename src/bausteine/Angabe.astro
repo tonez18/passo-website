@@ -1,0 +1,15 @@
+---
+// Angabe aus den Einstellungen für die Rechtstexte. Ein leeres Feld steht als hervorgehobener Platzhalter „[fehlt: …]“ da;
+// mit Platzhaltern lässt die Veröffentlichungsprüfung die Seite nicht durch (pruefung/veroeffentlichung.mjs).
+import { oderFehlt } from '../einstellungen';
+interface Props {
+  wert: string;
+  /** Name des Felds im Platzhalter, z. B. „Name“. */
+  name: string;
+  /** E-Mail-Adresse: als mailto-Link. */
+  email?: boolean;
+}
+const { wert, name, email = false } = Astro.props;
+const da = wert.trim() !== '';
+---
+{da ? (email ? <a href={'mailto:' + wert.trim()}>{wert.trim()}</a> : wert.trim()) : <mark class="fehlt">{oderFehlt(wert, name)}</mark>}

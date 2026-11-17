@@ -14,7 +14,7 @@ import Spendenkarte from '../bausteine/Spendenkarte.astro';
 import Fragen from '../bausteine/Fragen.astro';
 import Passhoehe from '../bausteine/Passhoehe.astro';
 import { fragen } from '../daten/fragen';
-import { pfad } from '../einstellungen';
+import { pfad, absolut } from '../einstellungen';
 
 import passTabletD from '../bilder/dunkel/pass-tablet.png';
 import passTabletH from '../bilder/hell/pass-tablet.png';
@@ -34,10 +34,33 @@ const telefonHero = { breiten: [240, 390, 480, 780], groesse: '(max-width: 699px
 const tabletHero = { breiten: [640, 960, 1366], groesse: '(max-width: 1079px) 578px, 520px' };
 const telefonKarte = { breiten: [180, 240, 390, 480], groesse: '(max-width: 699px) 145px, 160px' };
 const tvKarte = { breiten: [320, 480, 640, 960], groesse: '(max-width: 699px) 270px, 300px' };
+
+const beschreibung = 'Passo bringt echte Strecken und Trainings auf deinen Smart-Trainer. Kostenlos, ohne Konto, ohne Abo.';
+// Strukturierte Daten: die App (kostenlos) und die Fragen. Keine Bewertungen, es gibt keine.
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    name: 'Passo',
+    description: beschreibung,
+    url: absolut('/'),
+    image: absolut('/teilbild.png'),
+    applicationCategory: 'HealthApplication',
+    operatingSystem: 'iOS, iPadOS, tvOS',
+    inLanguage: 'de',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'EUR' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: fragen.map((f) => ({ '@type': 'Question', name: f.frage, acceptedAnswer: { '@type': 'Answer', text: f.antwort } })),
+  },
+];
 ---
 <Seite
-  titel="Passo – Indoor fahren. Draußen erleben."
-  beschreibung="Passo bringt echte Strecken und Trainings auf deinen Smart-Trainer. Kostenlos, ohne Konto, ohne Abo."
+  titel="Passo – Indoor Cycling App für echte Strecken | kostenlos, ohne Abo"
+  beschreibung={beschreibung}
+  jsonLd={jsonLd}
   pfadname="/"
   position="km 0,0 · 908 m"
 >

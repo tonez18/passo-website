@@ -49,3 +49,15 @@ export function fehlendeAngaben(e: Einstellungen = einstellungen): string[] {
   if (!e.impressum.ort) f.push('impressum.ort');
   return f;
 }
+
+/** Angabe für die Rechtstexte; ein leeres Feld wird zum sichtbaren Platzhalter „[fehlt: Name]“. */
+export function oderFehlt(wert: string, name: string): string {
+  return wert.trim() || `[fehlt: ${name}]`;
+}
+
+/** Inhalt der robots.txt: gesperrt, solange die Seite nicht indexierbar ist; sonst frei mit Verweis auf die Sitemap. */
+export function robotsText(e: Einstellungen = einstellungen): string {
+  if (!e.indexierbar) return 'User-agent: *\nDisallow: /\n';
+  const sitemap = e.seitenUrl.replace(/\/+$/, '') + pfad('/sitemap-index.xml', e.basisPfad);
+  return `User-agent: *\nAllow: /\n\nSitemap: ${sitemap}\n`;
+}

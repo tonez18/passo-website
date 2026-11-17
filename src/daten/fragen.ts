@@ -1,4 +1,4 @@
-// Fragen und Antworten der Startseite. Dieselben Daten dienen später als FAQPage (JSON-LD).
+// Fragen und Antworten der Startseite. Dieselben Daten stehen als FAQPage (JSON-LD) im Kopf der Startseite.
 // Antworten nur aus dem, was Specs und App belegen.
 export interface Frage { frage: string; antwort: string }
 

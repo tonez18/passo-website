@@ -11,6 +11,7 @@ if (knopf) {
   knopf.addEventListener('click', () => {
     const neu = wurzel.getAttribute('data-thema') === 'dunkel' ? 'hell' : 'dunkel';
     wurzel.setAttribute('data-thema', neu);
+    document.querySelectorAll<HTMLMetaElement>('meta[name="theme-color"]').forEach((m) => { m.content = neu === 'hell' ? '#F3F6FB' : '#0B0E14'; });
     try { localStorage.setItem('passo-thema', neu); } catch { /* privates Fenster: Wahl gilt bis zum Neuladen */ }
     beschrifte();
   });

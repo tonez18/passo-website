@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { einstellungen, pfad, absolut, ladeKnopf, fehlendeAngaben } from '../src/einstellungen';
+import { einstellungen, pfad, absolut, ladeKnopf, fehlendeAngaben, oderFehlt, robotsText } from '../src/einstellungen';
 
 const leer: typeof einstellungen = {
   ...einstellungen,
@@ -49,5 +49,28 @@ describe('fehlendeAngaben', () => {
   });
   it('ist leer, wenn alles da ist', () => {
     expect(fehlendeAngaben({ ...leer, appStoreUrl: 'https://a', kofiUrl: 'https://k', kontaktEmail: 'a@b.de', impressum: { name: 'N', strasse: 'S', ort: 'O' } })).toEqual([]);
+  });
+});
+
+describe('oderFehlt', () => {
+  it('zeigt leere Angaben als sichtbaren Platzhalter', () => {
+    expect(oderFehlt('', 'Name')).toBe('[fehlt: Name]');
+    expect(oderFehlt('   ', 'Ort')).toBe('[fehlt: Ort]');
+    expect(oderFehlt('Musterweg 1', 'Straße')).toBe('Musterweg 1');
+  });
+});
+
+describe('robotsText', () => {
+  it('sperrt alles und nennt keine Sitemap, solange die Seite nicht indexierbar ist', () => {
+    const t = robotsText({ ...leer, indexierbar: false });
+    expect(t).toContain('Disallow: /');
+    expect(t).not.toContain('Sitemap');
+    expect(t).not.toContain('Allow: /');
+  });
+  it('gibt alles frei und nennt die Sitemap mit Unterpfad', () => {
+    const t = robotsText({ ...leer, indexierbar: true, seitenUrl: 'https://beispiel.de', basisPfad: '/unter/' });
+    expect(t).toContain('Allow: /');
+    expect(t).not.toContain('Disallow');
+    expect(t).toContain('Sitemap: https://beispiel.de/unter/sitemap-index.xml');
   });
 });

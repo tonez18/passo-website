@@ -1,0 +1,27 @@
+---
+// Schlichte Textseite (Impressum, Datenschutz): kurzer Kartenkopf mit Höhenlinien, darunter der Text in einer Spalte.
+import Seite from '../layouts/Seite.astro';
+import KartenKopf from './KartenKopf.astro';
+interface Props {
+  titel: string;
+  beschreibung: string;
+  pfadname: string;
+  /** Zeile über der Überschrift, z. B. „Blatt 3 · Rechtliches“. */
+  blatt: string;
+  ueberschrift: string;
+}
+const { titel, beschreibung, pfadname, blatt, ueberschrift } = Astro.props;
+---
+<Seite titel={titel} beschreibung={beschreibung} pfadname={pfadname}>
+<div class="page" id="page">
+  <KartenKopf>
+    <div class="wrap hero-s-in hero-txt">
+      <p class="crumb">{blatt}</p>
+      <h1>{ueberschrift}</h1>
+    </div>
+  </KartenKopf>
+  <section class="wrap txt">
+    <slot />
+  </section>
+</div>
+</Seite>

@@ -1,0 +1,56 @@
+---
+// Datenschutzerklärung der Webseite. Angaben zum Verantwortlichen aus src/einstellungen.ts; leere Felder stehen als Platzhalter da.
+// Der Text ist ein Entwurf und keine Rechtsberatung.
+import Textseite from '../bausteine/Textseite.astro';
+import Angabe from '../bausteine/Angabe.astro';
+import { einstellungen, ladeKnopf } from '../einstellungen';
+const { impressum, kontaktEmail } = einstellungen;
+const appStore = ladeKnopf().text === 'Im App Store laden';
+---
+<Textseite
+  titel="Datenschutz | Passo"
+  beschreibung="Datenschutz auf der Passo-Webseite: keine Cookies, kein Tracking, keine fremden Server außer dem Hoster."
+  pfadname="/datenschutz/"
+  blatt="Blatt 4 · Rechtliches"
+  ueberschrift="Datenschutz"
+>
+  <h2>Kurz gesagt</h2>
+  <ul>
+    <li>Diese Seite setzt keine Cookies und misst nicht, wer sie besucht.</li>
+    <li>Schriften, Bilder und der Film liegen auf dieser Seite selbst, nicht bei fremden Diensten.</li>
+    <li>Beim Aufruf fallen nur die Zugriffsdaten an, die der Hoster zum Ausliefern braucht.</li>
+  </ul>
+  <p>Diese Erklärung gilt für die Webseite, nicht für die App.</p>
+
+  <h2>Verantwortlich</h2>
+  <address>
+    <Angabe wert={impressum.name} name="Name" /><br>
+    <Angabe wert={impressum.strasse} name="Straße und Hausnummer" /><br>
+    <Angabe wert={impressum.ort} name="Postleitzahl und Ort" /><br>
+    E-Mail: <Angabe wert={kontaktEmail} name="E-Mail" email />
+  </address>
+
+  <h2>Hosting bei GitHub Pages</h2>
+  <p>Die Seite liegt bei GitHub Pages, einem Dienst der GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, USA. Wenn du die Seite aufrufst, verarbeitet GitHub technisch nötige Daten in Zugriffsprotokollen, darunter deine IP-Adresse, Datum und Uhrzeit, die abgerufene Adresse und Angaben deines Browsers. Das geschieht, um die Seite auszuliefern und ihren Betrieb abzusichern.</p>
+  <p>Rechtsgrundlage ist Art. 6 Abs. 1 Buchstabe f DSGVO; das berechtigte Interesse ist der sichere und zuverlässige Betrieb der Seite. GitHub kann Daten auch in den USA verarbeiten. Einzelheiten stehen in der <a href="https://docs.github.com/de/site-policy/privacy-policies/github-general-privacy-statement" rel="noopener">Datenschutzerklärung von GitHub</a>. Auf die Zugriffsprotokolle von GitHub hat der Betreiber dieser Seite keinen Zugriff.</p>
+
+  <h2>Keine Cookies, kein Tracking</h2>
+  <p>Die Seite setzt keine Cookies, nutzt keine Analyse- oder Werbedienste und bindet keine Inhalte fremder Server ein. Einen Cookie-Hinweis gibt es deshalb nicht.</p>
+
+  <h2>Gemerkte Designwahl</h2>
+  <p>Stellst du mit dem Umschalter im Kopf auf das helle oder dunkle Design um, merkt sich dein Browser diese Wahl in seinem lokalen Speicher (<code>localStorage</code>, Eintrag „passo-thema“). Der Eintrag bleibt auf deinem Gerät, wird nicht übertragen und lässt sich in den Einstellungen deines Browsers löschen.</p>
+
+  <h2>Links zu TestFlight{appStore && ', App Store'} und Ko-fi</h2>
+  <p>Die Knöpfe zum Laden der App führen zu {appStore ? 'TestFlight oder zum App Store, beides Dienste von Apple' : 'TestFlight, einem Dienst von Apple'}, der Spendenknopf führt zu Ko-fi. Es sind gewöhnliche Links: Daten gehen erst dann an diese Anbieter, wenn du einen Link anklickst. Ab dann gelten deren Datenschutzbestimmungen.</p>
+
+  <h2>Trainingspläne und Film</h2>
+  <p>Die Plandateien (.passoplan) und der Film werden von dieser Seite selbst geladen. Dabei entstehen keine anderen Daten als beim Aufruf der Seite.</p>
+
+  <h2>Kontakt per E-Mail</h2>
+  <p>Schreibst du eine E-Mail, werden deine Adresse und der Inhalt der Nachricht verwendet, um dir zu antworten (Art. 6 Abs. 1 Buchstabe f DSGVO), und gelöscht, sobald das Anliegen erledigt ist und keine Aufbewahrungspflicht entgegensteht.</p>
+
+  <h2>Deine Rechte</h2>
+  <p>Du hast das Recht auf Auskunft über deine Daten, auf Berichtigung, Löschung und Einschränkung der Verarbeitung, auf Datenübertragbarkeit sowie das Recht, einer Verarbeitung zu widersprechen, die auf Art. 6 Abs. 1 Buchstabe f DSGVO beruht. Dafür genügt eine E-Mail an die Adresse oben. Außerdem kannst du dich bei einer Datenschutz-Aufsichtsbehörde beschweren.</p>
+
+  <p class="stand">Stand: November 2026</p>
+</Textseite>

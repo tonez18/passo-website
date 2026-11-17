@@ -4,6 +4,7 @@ import '../stile/farben.css';
 import '../stile/basis.css';
 import '../stile/karte.css';
 import '../stile/plaene.css';
+import '../stile/text.css';
 import '../stile/bewegung.css';
 import Symbole from '../bausteine/Symbole.astro';
 import Kopf from '../bausteine/Kopf.astro';
@@ -15,12 +16,18 @@ interface Props {
   beschreibung: string;
   /** Pfad der Seite ohne Unterpfad, z. B. '/' oder '/plaene/'. */
   pfadname: string;
-  teilbild?: string;
+  /** Strukturierte Daten (JSON-LD) der Seite. */
   jsonLd?: object[];
   /** Starttext der Positionsanzeige im Kopf (Seiten mit Route). */
   position?: string;
+  /** Seite nie in Suchmaschinen (404): immer noindex, keine kanonische Adresse. */
+  ohneIndex?: boolean;
 }
-const { titel, beschreibung, pfadname, position } = Astro.props;
+const { titel, beschreibung, pfadname, jsonLd = [], position, ohneIndex = false } = Astro.props;
+const adresse = absolut(pfadname);
+const teilbild = absolut('/teilbild.png');
+// Schriftschnitte des ersten Bildschirms (Überschrift 800, Text 400, Knöpfe 700) vorab laden.
+const schriften = ['ExtraBold', 'Regular', 'Bold'];
 ---
 <!doctype html>
 <html lang="de">
@@ -29,15 +36,36 @@ const { titel, beschreibung, pfadname, position } = Astro.props;
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{titel}</title>
 <meta name="description" content={beschreibung}>
-<link rel="canonical" href={absolut(pfadname)}>
-{!einstellungen.indexierbar && <meta name="robots" content="noindex, nofollow">}
+{!ohneIndex && <link rel="canonical" href={adresse}>}
+{(!einstellungen.indexierbar || ohneIndex) && <meta name="robots" content="noindex, nofollow">}
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Passo">
+<meta property="og:locale" content="de_DE">
+<meta property="og:title" content={titel}>
+<meta property="og:description" content={beschreibung}>
+{!ohneIndex && <meta property="og:url" content={adresse}>}
+<meta property="og:image" content={teilbild}>
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Passo: Indoor fahren. Draußen erleben.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content={titel}>
+<meta name="twitter:description" content={beschreibung}>
+<meta name="twitter:image" content={teilbild}>
+<meta name="theme-color" content="#0B0E14" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F3F6FB" media="(prefers-color-scheme: light)">
 <link rel="icon" type="image/svg+xml" href={pfad('/favicon.svg')}>
+<link rel="apple-touch-icon" href={pfad('/apple-touch-icon.png')}>
+{schriften.map((s) => <link rel="preload" as="font" type="font/woff2" href={pfad(`/fonts/Inter-${s}.woff2`)} crossorigin>)}
+{jsonLd.map((daten) => <script type="application/ld+json" set:html={JSON.stringify(daten).replace(/</g, '\\u003c')} />)}
 <!-- Vorabskript: setzt das Design vor dem ersten Zeichnen (kein Aufblitzen). „js“ schaltet Umschalter und Menü ein,
-     „anim“ die Startzustände der Bewegung; ohne JavaScript oder mit „Bewegung reduzieren“ steht alles im Endzustand. -->
+     „anim“ die Startzustände der Bewegung; ohne JavaScript oder mit „Bewegung reduzieren“ steht alles im Endzustand.
+     Die Farbe der Browserleiste (theme-color) folgt dem gewählten Design. -->
 <script is:inline>
 (function(){var d=document.documentElement,t=null;try{t=localStorage.getItem('passo-thema')}catch(e){}
 if(t!=='dunkel'&&t!=='hell')t=matchMedia('(prefers-color-scheme: light)').matches?'hell':'dunkel';
 d.setAttribute('data-thema',t);d.classList.add('js');
+var m=document.querySelectorAll('meta[name="theme-color"]');for(var i=0;i<m.length;i++)m[i].content=t==='hell'?'#F3F6FB':'#0B0E14';
 if(matchMedia('(prefers-reduced-motion: reduce)').matches)d.setAttribute('data-ruhig','');else d.classList.add('anim');})();
 </script>
 </head>

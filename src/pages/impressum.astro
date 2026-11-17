@@ -1,0 +1,37 @@
+---
+// Impressum. Name, Anschrift und E-Mail kommen aus src/einstellungen.ts; leere Felder stehen als Platzhalter da.
+// Der Text ist ein Entwurf und keine Rechtsberatung.
+import Textseite from '../bausteine/Textseite.astro';
+import Angabe from '../bausteine/Angabe.astro';
+import { einstellungen, pfad } from '../einstellungen';
+const { impressum, kontaktEmail } = einstellungen;
+---
+<Textseite
+  titel="Impressum | Passo"
+  beschreibung="Impressum der Passo-Webseite: Anbieter, Anschrift und Kontakt."
+  pfadname="/impressum/"
+  blatt="Blatt 3 · Rechtliches"
+  ueberschrift="Impressum"
+>
+  <h2>Angaben gemäß § 5 DDG</h2>
+  <address>
+    <Angabe wert={impressum.name} name="Name" /><br>
+    <Angabe wert={impressum.strasse} name="Straße und Hausnummer" /><br>
+    <Angabe wert={impressum.ort} name="Postleitzahl und Ort" />
+  </address>
+
+  <h2>Kontakt</h2>
+  <p>E-Mail: <Angabe wert={kontaktEmail} name="E-Mail" email /></p>
+
+  <h2>Verantwortlich für den Inhalt</h2>
+  <p>Verantwortlich nach § 18 Abs. 2 MStV: <Angabe wert={impressum.name} name="Name" />, Anschrift wie oben.</p>
+
+  <h2>Unabhängiges Projekt</h2>
+  <p>Passo ist ein unabhängiges Projekt und steht in keiner Verbindung zu Zwift, Strava oder Apple. Markennamen gehören ihren Inhabern und werden hier nur genannt, um Geräte und Dienste zu bezeichnen.</p>
+
+  <h2>Links zu anderen Seiten</h2>
+  <p>Diese Seite verlinkt auf fremde Seiten, zum Beispiel für den Download der App und für Spenden. Für deren Inhalte sind allein ihre Betreiber verantwortlich. Fällt dir ein Link auf, der nicht in Ordnung ist, schreib eine E-Mail; er wird dann geprüft und entfernt.</p>
+
+  <h2>Urheberrecht</h2>
+  <p>Texte, Bilder, Illustrationen und der Film auf dieser Seite sind urheberrechtlich geschützt; alle Rechte vorbehalten. Die <a href={pfad('/plaene/')}>Trainingspläne</a> darfst du für dein eigenes Training laden und in Passo nutzen. Die Schrift Inter steht unter der SIL Open Font License.</p>
+</Textseite>
