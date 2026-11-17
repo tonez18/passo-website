@@ -1,0 +1,34 @@
+---
+// Kopf aller Seiten: Zeichen, Menü, Umschalter, Download-Knopf. Unter 700 px klappt das Menü hinter den Menüknopf.
+import Zeichen from './Zeichen.astro';
+import ThemaSchalter from './ThemaSchalter.astro';
+import LadeKnopf from './LadeKnopf.astro';
+import { pfad } from '../einstellungen';
+interface Props {
+  /** Pfad der Seite, z. B. '/plaene/'. */
+  pfadname: string;
+  /** Starttext der Positionsanzeige (km und Höhe); ohne Angabe gibt es keine Anzeige. */
+  position?: string;
+}
+const { pfadname, position } = Astro.props;
+const start = pfad('/');
+---
+<header class="head">
+  <div class="wrap head-in">
+    <a class="brand" href={start} aria-label="Passo, zur Startseite">
+      <Zeichen />
+      <span>Passo</span>
+    </a>
+    {position && <span class="pos num" id="pos" aria-hidden="true"><i></i><span id="posT">{position}</span></span>}
+    <nav class="nav" id="nav" aria-label="Hauptmenü">
+      <a href={start + '#funktionen'}>Funktionen</a>
+      <a href={pfad('/plaene/')} aria-current={pfadname.startsWith('/plaene/') ? 'page' : undefined}>Pläne</a>
+      <a href={start + '#unterstuetzen'}>Unterstützen</a>
+      <ThemaSchalter />
+    </nav>
+    <LadeKnopf klein />
+    <button class="icb menu-b" id="menuB" type="button" aria-label="Menü" aria-expanded="false" aria-controls="nav">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7.5h16M4 12h16M4 16.5h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+</header>

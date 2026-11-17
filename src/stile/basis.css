@@ -1,0 +1,58 @@
+/* Grundlagen aller Seiten: Schrift, Knöpfe, Kopf, Fuß */
+/* Inter (OFL, siehe public/fonts/OFL.txt), selbst gehostet */
+@font-face{font-family:Inter;src:url(/fonts/Inter-Regular.ttf) format("truetype");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:Inter;src:url(/fonts/Inter-Medium.ttf) format("truetype");font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:Inter;src:url(/fonts/Inter-SemiBold.ttf) format("truetype");font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:Inter;src:url(/fonts/Inter-Bold.ttf) format("truetype");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:Inter;src:url(/fonts/Inter-ExtraBold.ttf) format("truetype");font-weight:800;font-style:normal;font-display:swap}
+
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--grund);color:var(--text);font:400 17px/1.6 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,svg,video{display:block;max-width:100%}
+a{color:inherit}
+h1,h2,h3,p,ul,ol,figure{margin:0}
+ul,ol{padding:0;list-style:none}
+:focus-visible{outline:2px solid var(--akzent-text);outline-offset:3px;border-radius:6px}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.wrap{padding-inline:var(--pad)}
+.num{font-variant-numeric:tabular-nums}
+
+/* Knöpfe */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:50px;padding:0 22px;border-radius:14px;font-weight:700;font-size:16px;letter-spacing:-.01em;text-decoration:none;border:1px solid transparent;cursor:pointer;transition:transform .2s cubic-bezier(.2,.7,.2,1),opacity .2s}
+.btn:hover{transform:translateY(-2px)}.btn:active{transform:translateY(0)}
+.btn-p{background:var(--akzent);color:var(--auf-akzent)}
+.btn-s{border-color:var(--linie);color:var(--text);background:var(--flaeche)}
+.btn-s svg{color:var(--red)}
+/* Knopf ohne Ziel („Bald verfügbar“): kein Link, keine Bewegung */
+.btn[aria-disabled="true"]{background:var(--flaeche2);color:var(--gedaempft);border-color:var(--linie);cursor:default}
+.btn[aria-disabled="true"]:hover{transform:none}
+.btn-sm{min-height:40px;padding:0 16px;border-radius:12px;font-size:14.5px}
+
+/* Kopf */
+.head{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--grund) 84%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);border-bottom:1px solid color-mix(in srgb,var(--linie) 70%,transparent)}
+.head-in{display:flex;align-items:center;gap:26px;height:66px}
+.brand{display:inline-flex;align-items:center;gap:9px;text-decoration:none;font-weight:700;font-size:22px;letter-spacing:-.035em;margin-right:auto}
+.brand svg{width:32px;height:32px;overflow:visible}
+.brand .dot{fill:var(--text)}
+.nav{display:flex;align-items:center;gap:26px}
+.nav a{text-decoration:none;font-weight:500;font-size:15px;color:var(--gedaempft);padding:8px 0;transition:opacity .2s}
+.nav a:hover{color:var(--text)}
+.pos{font-size:12px;font-weight:600;letter-spacing:.04em;color:var(--gedaempft);padding:6px 10px;border:1px solid var(--linie);border-radius:999px;white-space:nowrap;display:none}
+.pos i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--route);margin-right:7px;vertical-align:1px}
+.icb{width:40px;height:40px;display:inline-grid;place-items:center;border-radius:12px;border:1px solid var(--linie);background:var(--flaeche);color:var(--text);cursor:pointer;padding:0}
+.icb svg{width:20px;height:20px}
+.th .sun{display:none}[data-thema="hell"] .th .sun{display:block}[data-thema="hell"] .th .moon{display:none}
+html:not(.js) .th,html:not(.js) .menu-b{display:none}
+.menu-b{display:none}
+@media (min-width:1080px){html.js .pos{display:inline-block}}
+
+/* Fuß */
+.foot{border-top:1px solid var(--linie);padding-top:44px;padding-bottom:56px;color:var(--gedaempft);font-size:14.5px;position:relative;z-index:1;background:var(--grund)}
+.foot-in{display:flex;flex-wrap:wrap;gap:22px 48px;align-items:flex-start;justify-content:space-between}
+.foot .brand{font-size:19px;color:var(--text);margin:0}.foot .brand svg{width:26px;height:26px}
+.foot nav{display:flex;flex-wrap:wrap;gap:8px 24px}
+.foot nav a{text-decoration:none;font-weight:500;padding:4px 0}.foot nav a:hover{color:var(--text)}
+.foot small{display:block;font-size:13.5px;max-width:46em;margin-top:26px;line-height:1.55}
+.nav a[aria-current]{color:var(--text)}
+.foot-t{margin-top:10px;max-width:24em}

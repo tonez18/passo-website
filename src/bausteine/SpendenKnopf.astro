@@ -1,0 +1,7 @@
+---
+// Spendenknopf zu Ko-fi. Ohne Adresse in den Einstellungen: „Bald verfügbar“, kein Link.
+import Knopf from './Knopf.astro';
+import { einstellungen } from '../einstellungen';
+const url = einstellungen.kofiUrl || null;
+---
+<Knopf href={url} extern>{url ? 'Auf Ko-fi unterstützen' : 'Bald verfügbar'}</Knopf>

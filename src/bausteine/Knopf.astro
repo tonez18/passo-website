@@ -1,0 +1,15 @@
+---
+// Knopf als Link. Ohne Ziel (href null) kein Link und nicht fokussierbar: ein <span aria-disabled="true">.
+interface Props {
+  href: string | null;
+  art?: 'haupt' | 'neben';
+  klein?: boolean;
+  /** Fremde Seite: rel="noopener". */
+  extern?: boolean;
+}
+const { href, art = 'haupt', klein = false, extern = false } = Astro.props;
+const klassen = ['btn', art === 'haupt' ? 'btn-p' : 'btn-s', klein && 'btn-sm'];
+---
+{href === null
+  ? <span class:list={klassen} aria-disabled="true"><slot /></span>
+  : <a class:list={klassen} href={href} rel={extern ? 'noopener' : undefined}><slot /></a>}

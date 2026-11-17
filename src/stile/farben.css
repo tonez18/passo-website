@@ -1,0 +1,25 @@
+/* Farben beider Designs. Dunkel ist die Nachtkarte, hell die klassische Karte. */
+/* Nachtkarte */
+:root{color-scheme:dark;
+  --grund:#0B0E14;--flaeche:#151A23;--flaeche2:#1E2531;--linie:#2A3342;--text:#E8EBF0;--gedaempft:#8B93A5;
+  --akzent:#2DD4BF;--akzent-text:#2DD4BF;--auf-akzent:#042F2E;--route:#2DD4BF;
+  --contour:#2B374A;--contour-ix:#40506A;--grid:rgba(139,147,165,.05);--road:#6B7890;
+  --z1:#8B93A5;--z2:#60A5FA;--z3:#4ADE80;--z4:#E8B04B;--z5:#2DD4BF;--z6:#E879F9;--z7:#E879F9;--blue:#60A5FA;--green:#4ADE80;--amber:#E8B04B;--red:#FF6B7A;
+  --frame:#05070B;--frame-edge:#2A3342;--shadow:0 30px 60px -20px rgba(0,0,0,.6);
+  --il-sky1:#161C2A;--il-sky2:#28324A;--il-h1:#1F2638;--il-h2:#283145;--il-h3:#1A2030;--il-tree:#34405A;--il-rock:#3A4560;--il-snow:#E8EBF0;--il-star:.4;--il-sign:#E6E2D3;--il-ink:#0B0E14;--il-pole:#8B93A5;
+  --gap:150px;--pad:max(48px,calc((100vw - 1120px)/2));
+}
+/* Helle Karte */
+:root[data-thema="hell"]{color-scheme:light;
+  --grund:#F3F6FB;--flaeche:#FFFFFF;--flaeche2:#E9EEF5;--linie:#D5DCE6;--text:#141A2E;--gedaempft:#5A667F;
+  --akzent:#2DD4BF;--akzent-text:#0A7266;--auf-akzent:#042F2E;--route:#12A594;
+  --contour:#D3DBE7;--contour-ix:#B4C1D3;--grid:rgba(90,102,127,.06);--road:#8494AD;
+  --frame:#10141C;--frame-edge:#C3CCD9;--shadow:0 30px 60px -24px rgba(40,56,90,.35);
+  --il-sky1:#DCE6F2;--il-sky2:#EEF3F9;--il-h1:#CBD6E5;--il-h2:#B8C7DA;--il-h3:#A8BAD0;--il-tree:#8FA3BD;--il-rock:#7C8CA6;--il-snow:#FFFFFF;--il-star:0;--il-sign:#FFFFFF;--il-ink:#141A2E;--il-pole:#5A667F;
+}
+@media (prefers-color-scheme: light){:root:not([data-thema]){color-scheme:light;
+  --grund:#F3F6FB;--flaeche:#FFFFFF;--flaeche2:#E9EEF5;--linie:#D5DCE6;--text:#141A2E;--gedaempft:#5A667F;
+  --akzent-text:#0A7266;--route:#12A594;--contour:#D3DBE7;--contour-ix:#B4C1D3;--grid:rgba(90,102,127,.06);--road:#8494AD;
+  --frame:#10141C;--frame-edge:#C3CCD9;--shadow:0 30px 60px -24px rgba(40,56,90,.35);
+  --il-sky1:#DCE6F2;--il-sky2:#EEF3F9;--il-h1:#CBD6E5;--il-h2:#B8C7DA;--il-h3:#A8BAD0;--il-tree:#8FA3BD;--il-rock:#7C8CA6;--il-snow:#FFFFFF;--il-star:0;--il-sign:#FFFFFF;--il-ink:#141A2E;--il-pole:#5A667F;}
+  :root:not([data-thema]) .im-d.sw{display:none}:root:not([data-thema]) .im-l{display:block}}

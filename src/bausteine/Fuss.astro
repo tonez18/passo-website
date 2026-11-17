@@ -1,0 +1,26 @@
+---
+// Fuß aller Seiten: kurzer Satz, Links, Markenhinweis.
+import Zeichen from './Zeichen.astro';
+import { einstellungen, pfad } from '../einstellungen';
+const start = pfad('/');
+// Solange keine E-Mail-Adresse eingetragen ist, führt „Kontakt“ zum Impressum.
+const kontakt = einstellungen.kontaktEmail ? 'mailto:' + einstellungen.kontaktEmail : pfad('/impressum/');
+---
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-in">
+      <div>
+        <a class="brand" href={start} aria-label="Passo, zur Startseite"><Zeichen /><span>Passo</span></a>
+        <p class="foot-t">Echte Strecken und Trainings für deinen Smart-Trainer. Kostenlos, ohne Konto, ohne Abo.</p>
+      </div>
+      <nav aria-label="Fußmenü">
+        <a href={pfad('/plaene/')}>Pläne</a>
+        <a href={start + '#unterstuetzen'}>Unterstützen</a>
+        <a href={pfad('/impressum/')}>Impressum</a>
+        <a href={pfad('/datenschutz/')}>Datenschutz</a>
+        <a href={kontakt}>Kontakt</a>
+      </nav>
+    </div>
+    <small>Passo ist ein unabhängiges Projekt und steht in keiner Verbindung zu Zwift, Strava oder Apple. Markennamen gehören ihren Inhabern.</small>
+  </div>
+</footer>

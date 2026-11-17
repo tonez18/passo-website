@@ -1,0 +1,9 @@
+---
+// Download-Knopf. Text und Ziel kommen aus den Einstellungen: „Beta laden“, „Im App Store laden“ oder „Bald verfügbar“.
+import Knopf from './Knopf.astro';
+import { ladeKnopf } from '../einstellungen';
+interface Props { klein?: boolean }
+const { klein = false } = Astro.props;
+const k = ladeKnopf();
+---
+<Knopf href={k.url} klein={klein} extern>{k.text}</Knopf>

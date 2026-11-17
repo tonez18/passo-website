@@ -1,0 +1,5 @@
+node_modules/
+dist/
+.astro/
+pruefung/ausgabe/
+.DS_Store
