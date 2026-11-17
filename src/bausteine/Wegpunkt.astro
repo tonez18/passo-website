@@ -1,6 +1,7 @@
 ---
 // Kartenangabe über einem Abschnitt: Wegpunkt-Zeichen, Name, km, Höhe, Steigung.
 // Die Zeilen sind zugleich die Wegpunkte der Route; das Skript liest km und Höhe aus data-km und data-hoehe.
+import { zahlText } from '../skripte/route';
 interface Props {
   zeichen: 'ort' | 'aussicht' | 'gipfel';
   name: string;
@@ -13,6 +14,5 @@ interface Props {
 const { zeichen, name, km, hoehe, steigung, einblenden = false } = Astro.props;
 const symbol = { ort: 'poi-place', aussicht: 'poi-view', gipfel: 'poi-peak' }[zeichen];
 const komma = (n: number) => String(n).replace('.', ',');
-const tausender = (n: number) => String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 ---
-<p class:list={['leg', einblenden && 'rv']} data-km={km} data-hoehe={hoehe}><span class="wp"><svg aria-hidden="true"><use href={'#' + symbol}/></svg></span><b>{name}</b><span>km {komma(km)}</span><span>{tausender(hoehe)} m</span>{steigung !== undefined && <span>↗ {steigung.toFixed(1).replace('.', ',')} %</span>}</p>
+<p class:list={['leg', einblenden && 'rv']} data-km={km} data-hoehe={hoehe}><span class="wp"><svg aria-hidden="true"><use href={'#' + symbol}/></svg></span><b>{name}</b><span>km {komma(km)}</span><span>{zahlText(hoehe)} m</span>{steigung !== undefined && <span>↗ {steigung.toFixed(1).replace('.', ',')} %</span>}</p>

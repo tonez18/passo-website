@@ -248,3 +248,9 @@ h1 span{display:block}
 }
 
 @media (min-width:700px){.th-l{display:none}}
+
+/* Telefon ohne JavaScript: Das Menü klappt nicht, es steht als zweite Zeile unter dem Kopf. */
+@media (max-width:699px){
+  html:not(.js) .head-in{height:auto;flex-wrap:wrap;padding-top:10px;padding-bottom:4px}
+  html:not(.js) .nav{order:3;width:100%}
+}

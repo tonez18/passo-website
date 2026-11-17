@@ -12,3 +12,5 @@ if (nav && knopf) {
   nav.addEventListener('click', (e) => { if ((e.target as Element).closest('a')) menue(false); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') menue(false); });
 }
+
+export {};

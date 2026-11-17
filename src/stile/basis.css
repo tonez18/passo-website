@@ -57,3 +57,4 @@ html:not(.js) .th,html:not(.js) .menu-b{display:none}
 .nav a[aria-current]{color:var(--text)}
 .foot-t{margin-top:10px;max-width:24em}
 .hint-m{justify-content:center}
+.btn-sm{white-space:nowrap}
