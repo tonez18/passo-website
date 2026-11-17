@@ -11,7 +11,7 @@ import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright-core';
 import { starteServer, findeChromium } from './server.mjs';
 
-const SEITEN = { start: '', plaene: 'plaene/', plan: 'plaene/ftp-verbessern/' };
+const SEITEN = { start: '', plaene: 'plaene/', plan: 'plaene/ftp-verbessern/', impressum: 'impressum/', datenschutz: 'datenschutz/', 404: '404.html' };
 const nurSeite = process.argv[2] && process.argv[2] !== 'alle' ? process.argv[2] : null;
 const nurBreite = process.argv[3];
 const ausgabe = path.join(path.dirname(fileURLToPath(import.meta.url)), 'ausgabe');
