@@ -1,0 +1,19 @@
+---
+// „Was du brauchst“ als Zeichenerklärung: zwei Pflichtteile, der Rest ist Zugabe.
+import { ladeKnopf } from '../einstellungen';
+const beta = ladeKnopf().hinweis !== null;
+---
+<ul class="need rv">
+  <li>
+    <span class="sym" aria-hidden="true"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="4" y="5" width="18" height="24" rx="3"/><rect x="19" y="11" width="11" height="18" rx="2.500" fill="var(--flaeche)"/><path d="M23 26h3" stroke-linecap="round"/></svg></span>
+    <h3>iPhone oder iPad</h3><p>Darauf läuft Passo.{beta && ' Die Beta kommt über TestFlight.'}</p><span class="opt">Pflicht</span>
+  </li>
+  <li>
+    <span class="sym" aria-hidden="true"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="20" r="7"/><circle cx="12" cy="20" r="2"/><path d="M5 29h20M19 20h6l3 9M21 6l4 3.500-4 3.500V5.500zM21 9.500l-3-2.500M21 9.500l-3 2.500"/></svg></span>
+    <h3>Smart-Trainer mit Bluetooth (FTMS)</h3><p>Er stellt die Steigung und hält im Training die Watt.</p><span class="opt">Pflicht</span>
+  </li>
+  <li>
+    <span class="sym" aria-hidden="true"><svg viewBox="0 0 34 34" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 28s-10-6-10-13.500A5.600 5.600 0 0 1 17 11a5.600 5.600 0 0 1 10 3.500C27 22 17 28 17 28z"/><path d="M9 17h4l2-3.500 3 6 2-2.500h5"/></svg></span>
+    <h3>Pulsgurt, Zwift Ride oder Click, Apple TV</h3><p>Für Puls, Schalten am Lenker und das große Bild.</p><span class="opt">Auf Wunsch</span>
+  </li>
+</ul>

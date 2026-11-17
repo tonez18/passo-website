@@ -1,0 +1,11 @@
+---
+// Spendenkarte wie in der App: Herz, zwei Sätze, Ko-fi-Knopf, darunter die Pulskurve.
+import SpendenKnopf from './SpendenKnopf.astro';
+---
+<div class="sup rv">
+  <span class="heart" aria-hidden="true"><svg><use href="#i-heart"/></svg></span>
+  <div><h3>Gefällt dir Passo?</h3><p>Passo bleibt kostenlos. Eine Spende hilft beim Weiterbauen.</p></div>
+  <SpendenKnopf />
+  <span class="pulse" aria-hidden="true"><svg viewBox="0 0 1000 46" preserveAspectRatio="none"><path d="M0 30h250l14-6 12 6h40l10-24 14 36 10-14h60l14-6 12 6h40l10-24 14 36 10-14h470" fill="none" stroke="currentColor" stroke-width="2" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg><i class="cover"></i></span>
+</div>
+<p class="note rv">Spenden sind freiwillig und schalten nichts frei. Alle Funktionen sind für alle da.</p>

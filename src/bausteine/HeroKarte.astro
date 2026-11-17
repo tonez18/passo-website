@@ -1,0 +1,28 @@
+---
+// Hero-Karte: Höhenlinien in drei Ebenen, Höhenzahlen, Passstraße mit Fahrerpunkt, Gipfel und Orte.
+// Dunkel ist sie Nachtkarte, hell klassische Karte; die Farben kommen aus den CSS-Variablen.
+import Hoehenlinien from './Hoehenlinien.astro';
+---
+<div class="topo" aria-hidden="true">
+  <Hoehenlinien />
+  <div class="stage" id="stage">
+    <svg class="tl" data-k="0" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice"><use href="#tl0"/></svg>
+    <svg class="tl" data-k="1" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice"><use href="#tl1"/></svg>
+    <svg class="tl" data-k="2" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice"><use href="#tl2"/></svg>
+    <svg class="tl tx" data-k="1" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+      <use href="#tnum"/>
+      <use href="#road" class="road-c"/><use href="#road" class="road-l"/>
+      <g id="peaks">
+        <g class="pk-t"><path class="pk" d="M1130 83l9 15h-18z"/><text class="ph" x="1146" y="97">3 216</text></g>
+        <g class="pk-w"><path class="pk" d="M640 118l9 15h-18z"/><text class="ph" x="656" y="132">3 028</text></g>
+        <path class="pk" d="M88 118l9 15h-18z"/><text class="ph" x="104" y="132">2 216</text>
+        <g class="pk-t"><circle cx="1470" cy="160" r="5" fill="var(--grund)" stroke="var(--road)" stroke-width="2"/><text class="pl" x="1470" y="136" text-anchor="middle">Passhöhe</text><text class="ph" x="1470" y="120" text-anchor="middle">2 757 m</text></g>
+        <text class="ph pk-w" x="690" y="796" text-anchor="middle">Kehre 4</text>
+        <circle cx="320" cy="925" r="4" fill="var(--grund)" stroke="var(--road)" stroke-width="2"/><text class="ph" x="320" y="950" text-anchor="middle">Talort · 908 m</text>
+      </g>
+      <g id="roadRider" transform="translate(1470 160)"><circle class="rd-h" r="11"/><circle class="rd-d" r="5"/></g>
+    </svg>
+  </div>
+  <div class="spot" id="spot"><div class="spot-in" id="spotIn"></div></div>
+  <div class="scrim"></div>
+</div>

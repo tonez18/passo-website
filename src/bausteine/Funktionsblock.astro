@@ -1,0 +1,24 @@
+---
+// Funktionskarte: Kartenausschnitt aus den Höhenlinien mit Gerät, Stempel und Text.
+import Stempel from './Stempel.astro';
+interface Props {
+  /** Platz in der Reihe (0–2), staffelt das Einblenden. */
+  reihe: number;
+  /** Blattangabe oben links, z. B. „Blatt 1 · A3“. */
+  blatt: string;
+  /** viewBox des Ausschnitts aus der Hero-Karte (1600 × 1000). */
+  ausschnitt: string;
+  /** Welche Linien-Ebenen (0–2) der Ausschnitt zeigt. */
+  ebenen: number[];
+  stichwort: string;
+  titel: string;
+}
+const { reihe, blatt, ausschnitt, ebenen, stichwort, titel } = Astro.props;
+---
+<article class="fc rv" style={`--i:${reihe}`}>
+  <div class="win"><svg class="cut" viewBox={ausschnitt} preserveAspectRatio="xMidYMid slice" aria-hidden="true">{ebenen.map((e) => <use href={`#tl${e}`}/>)}</svg><span class="tick"></span><span class="coord">{blatt}</span>
+    <slot name="geraet" />
+    <div class="clipg"><i class="glow"></i></div></div>
+  <Stempel><slot name="stempel" /></Stempel>
+  <div class="fc-b"><span class="fc-k">{stichwort}</span><h3>{titel}</h3><p><slot /></p></div>
+</article>

@@ -1,0 +1,9 @@
+---
+// Route durch die Seite: gestrichelte Grundlinie, Teal-Spur, die sich beim Scrollen zeichnet, und der Fahrerpunkt.
+// Ohne JavaScript bleibt sie ausgeblendet (html.route-on fehlt); die Wegpunkte stehen dann in der Zeile.
+---
+<div class="route" id="route" aria-hidden="true">
+  <svg class="rt-base"><path/></svg>
+  <div class="rt-clip"><div class="rt-in"><svg class="rt-live"><path/></svg></div></div>
+  <div class="rider"><b></b><i></i></div>
+</div>

@@ -1,6 +1,188 @@
 ---
+// Startseite: das Kartenblatt einer Passfahrt von 908 m auf 2 757 m. Neun Abschnitte, Reihenfolge fest.
 import Seite from '../layouts/Seite.astro';
+import Route from '../bausteine/Route.astro';
+import HeroKarte from '../bausteine/HeroKarte.astro';
+import Wegpunkt from '../bausteine/Wegpunkt.astro';
+import Aufruf from '../bausteine/Aufruf.astro';
+import Geraet from '../bausteine/Geraet.astro';
+import Ablauf from '../bausteine/Ablauf.astro';
+import Funktionsblock from '../bausteine/Funktionsblock.astro';
+import Planvorschau from '../bausteine/Planvorschau.astro';
+import Packliste from '../bausteine/Packliste.astro';
+import Spendenkarte from '../bausteine/Spendenkarte.astro';
+import Fragen from '../bausteine/Fragen.astro';
+import Passhoehe from '../bausteine/Passhoehe.astro';
+import { fragen } from '../daten/fragen';
+import { pfad } from '../einstellungen';
+
+import passTabletD from '../bilder/dunkel/pass-tablet.png';
+import passTabletH from '../bilder/hell/pass-tablet.png';
+import workoutD from '../bilder/dunkel/workout.png';
+import workoutH from '../bilder/hell/workout.png';
+import routeD from '../bilder/dunkel/route.png';
+import routeH from '../bilder/hell/route.png';
+import stelvioD from '../bilder/dunkel/stelvio.png';
+import tvD from '../bilder/dunkel/tv.png';
+import seasonD from '../bilder/dunkel/season.png';
+import seasonH from '../bilder/hell/season.png';
+import backupD from '../bilder/dunkel/backup.png';
+import backupH from '../bilder/hell/backup.png';
+
+// Breiten der erzeugten Bilder und ihre Größe auf der Seite
+const telefonHero = { breiten: [240, 390, 480, 780], groesse: '(max-width: 699px) 206px, (max-width: 1079px) 188px, 218px' };
+const tabletHero = { breiten: [640, 960, 1366], groesse: '(max-width: 1079px) 578px, 520px' };
+const telefonKarte = { breiten: [180, 240, 390, 480], groesse: '(max-width: 699px) 145px, 160px' };
+const tvKarte = { breiten: [320, 480, 640, 960], groesse: '(max-width: 699px) 270px, 300px' };
 ---
-<Seite titel="Passo – Indoor fahren. Draußen erleben." beschreibung="Passo bringt echte Strecken und Trainings auf deinen Smart-Trainer. Kostenlos, ohne Konto, ohne Abo." pfadname="/">
-  <div class="page" id="page"><section class="sec wrap"><h1>Passo</h1></section></div>
+<Seite
+  titel="Passo – Indoor fahren. Draußen erleben."
+  beschreibung="Passo bringt echte Strecken und Trainings auf deinen Smart-Trainer. Kostenlos, ohne Konto, ohne Abo."
+  pfadname="/"
+  position="km 0,0 · 908 m"
+>
+<div class="page" id="page">
+  <Route />
+
+  <!-- 1 Hero -->
+  <section class="hero" id="start">
+    <HeroKarte />
+    <div class="wrap hero-in">
+      <div class="hero-t">
+        <h1><span>Indoor fahren.</span><span>Draußen erleben.</span></h1>
+        <p class="sub">Passo bringt echte Strecken und Trainings auf deinen Smart-Trainer. Kostenlos, ohne Konto, ohne Abo.</p>
+        <Aufruf />
+      </div>
+      <div class="devs" id="devs">
+        <div class="devs-in" id="devsIn">
+          <Geraet art="tablet" dunkel={passTabletD} hell={passTabletH} sofort {...tabletHero} alt="Passo auf dem iPad: Pass „Kesselberg“ mit Höhenprofil, Bestzeit und Orten unterwegs" />
+          <Geraet art="telefon" dunkel={workoutD} hell={workoutH} sofort {...telefonHero} alt="Passo auf dem iPhone: Training „Sweet Spot 3 × 12“ mit Zielwatt 233 und Ist-Watt 236" />
+        </div>
+      </div>
+    </div>
+    <div class="wrap sheet">
+      <Wegpunkt zeichen="ort" name="Start" km={0} hoehe={908} />
+      <span class="sheet-i"><svg viewBox="0 0 92 14" aria-hidden="true"><path d="M1 3v8M1 9h90M91 3v8M31 6v5M61 6v5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M1 9h30M61 9h30" stroke="currentColor" stroke-width="4"/></svg>0 – 3 km</span>
+      <span class="sheet-i">Äquidistanz 100 m</span>
+      <span class="sheet-i"><svg class="north" viewBox="0 0 16 20" aria-hidden="true"><path d="M8 1l5 17-5-4-5 4z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/><path d="M8 1v13l-5 4z" fill="currentColor"/></svg>Blatt 1 · Passo</span>
+    </div>
+  </section>
+
+  <!-- 2 So läuft eine Fahrt -->
+  <section class="sec wrap" id="ablauf">
+    <header class="sh rv">
+      <Wegpunkt zeichen="ort" name="Wegpunkt 1" km={3.1} hoehe={1120} steigung={6.8} />
+      <h2>So läuft eine Fahrt</h2>
+      <p class="lead">Drei Schritte, dann rollst du. Mehr Einrichtung gibt es nicht.</p>
+    </header>
+    <Ablauf />
+  </section>
+
+  <!-- 3 Funktionen -->
+  <section class="sec wrap" id="funktionen">
+    <header class="sh rv">
+      <Wegpunkt zeichen="aussicht" name="Wegpunkt 2" km={6.4} hoehe={1405} steigung={8.6} />
+      <h2>Was unterwegs dabei ist</h2>
+      <p class="lead">Sechs Kartenblätter, sechs Gründe aufzusteigen. Jedes bekommt seinen Stempel.</p>
+    </header>
+    <div class="fgrid">
+      <Funktionsblock reihe={0} blatt="Blatt 1 · A3" ausschnitt="930 60 520 390" ebenen={[1, 2]} stichwort="Strecken" titel="Echte Strecken, echte Steigungen">
+        <Geraet slot="geraet" art="telefon" dunkel={routeD} hell={routeH} {...telefonKarte} alt="Routenansicht „Schwarzwald-Runde“ mit Karte, Höhenprofil und Orten unterwegs" />
+        <svg slot="stempel" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c0-5 4-3 6-6s-1-5 3-6 5 1 5 1"/><circle cx="5" cy="19" r="1.6" fill="currentColor"/><circle cx="19" cy="8" r="1.6" fill="currentColor"/></svg>
+        Hol dir deine Route aus Komoot &amp; Co. Passo zeigt Karte und Höhenprofil, kündigt den nächsten Anstieg an, und dein Trainer stellt die Steigung.
+      </Funktionsblock>
+      <Funktionsblock reihe={1} blatt="Blatt 2 · B1" ausschnitt="520 20 520 390" ebenen={[1, 2]} stichwort="Training" titel="Trainings und Pläne">
+        <Geraet slot="geraet" art="telefon" dunkel={workoutD} hell={workoutH} {...telefonKarte} alt="Training „Sweet Spot 3 × 12“ mit Zielwatt 233 und Ist-Watt 236" />
+        <svg slot="stempel" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="13" width="3.6" height="7" rx="1"/><rect x="8" y="6" width="3.6" height="14" rx="1"/><rect x="13" y="11" width="3.6" height="9" rx="1"/><rect x="18" y="4" width="3.6" height="16" rx="1"/></svg>
+        Bau Intervalle selbst oder nimm ein fertiges Training; der Trainer hält die Watt. Pläne legen die Einheiten in deinen Kalender.
+      </Funktionsblock>
+      <Funktionsblock reihe={2} blatt="Blatt 3 · C2" ausschnitt="1080 520 520 390" ebenen={[0, 1, 2]} stichwort="Schon dabei" titel="Pässe und Radwege">
+        <Geraet slot="geraet" art="telefon" dunkel={stelvioD} {...telefonKarte} alt="Pass „Stilfser Joch“: 2.757 m, 24,4 km, 1.864 Höhenmeter, mit Höhenprofil" />
+        <svg slot="stempel" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 19 9.5 7l3 5 2-2.5L21 19z"/><path d="M14.5 9.5V4h4l-1.3 1.5L18.5 7h-4"/></svg>
+        16 Pässe vom Stilfser Joch bis zum Mont Ventoux sind fertig gespeichert, dazu der Bodensee-Radweg in acht Etappen. Auswählen und losfahren, ganz ohne Import. Orte am Weg sammelst du nebenbei als Stempel.
+      </Funktionsblock>
+      <Funktionsblock reihe={0} blatt="Blatt 4 · A1" ausschnitt="0 0 520 390" ebenen={[0, 1]} stichwort="Bildschirm" titel="Großes Bild">
+        <Geraet slot="geraet" art="tv" dunkel={tvD} {...tvKarte} alt="Passo auf dem Apple TV: Fahrt mit Strecke, Gang, Steigung, Watt und Puls groß im Bild" />
+        <svg slot="stempel" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="12" rx="2"/><path d="M8.5 20.5h7"/></svg>
+        Die Apple-TV-App bringt deine Fahrt auf den Fernseher. Am iPhone laufen die Werte auf dem Sperrbildschirm weiter.
+      </Funktionsblock>
+      <Funktionsblock reihe={1} blatt="Blatt 5 · B3" ausschnitt="300 560 520 390" ebenen={[0, 1]} stichwort="Rückblick" titel="Rückblick und Bestzeiten">
+        <Geraet slot="geraet" art="telefon" dunkel={seasonD} hell={seasonH} {...telefonKarte} alt="Rückblick mit Kilometern, Höhenmetern und Stunden" />
+        <svg slot="stempel" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="13.5" r="7"/><path d="M12 9.5v4l2.5 2M9.5 3h5"/></svg>
+        Woche, Monat, Saison und Jahr auf einen Blick, auch als Bild zum Teilen. Auf bekannten Strecken fährst du gegen dein früheres Ich.
+      </Funktionsblock>
+      <Funktionsblock reihe={2} blatt="Blatt 6 · C3" ausschnitt="1040 300 520 390" ebenen={[1, 2]} stichwort="Deins" titel="Deins">
+        <Geraet slot="geraet" art="telefon" dunkel={backupD} hell={backupH} {...telefonKarte} alt="„Sichern &amp; Wiederherstellen“: Sicherung mit Fahrten, Routen und Trainings erstellt" />
+        <svg slot="stempel" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7.5 3v5.5c0 4.5-3.2 8-7.5 9.5-4.3-1.5-7.5-5-7.5-9.5V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg>
+        Kein Konto, mehrere Profile auf einem Gerät. Deine Fahrten liegen bei dir, lassen sich sichern und zwischen deinen Geräten abgleichen; Strava nur auf Wunsch.
+      </Funktionsblock>
+    </div>
+  </section>
+
+  <!-- 4 Film -->
+  <section class="sec wrap" id="film">
+    <div class="film">
+      <header class="rv">
+        <Wegpunkt zeichen="aussicht" name="Wegpunkt 3" km={9.2} hoehe={1590} steigung={6.6} />
+        <h2>Aussichtspunkt: der Film</h2>
+        <p class="lead">Kurz anhalten und zuschauen. Der Film zeigt eine Fahrt mit Passo von der Route bis ins Ziel.</p>
+        <ul class="facts">
+          <li>Startet erst, wenn du auf Abspielen tippst.</li>
+          <li>Liegt auf dieser Seite, nicht bei einem Videodienst.</li>
+        </ul>
+      </header>
+      <div class="film-f rv" style="--i:1">
+        <video controls playsinline preload="none" poster={pfad('/film/poster.jpg')} aria-label="Passo-Film vom 16. November 2026">
+          <source src={pfad('/film/passo.mp4')} type="video/mp4">
+        </video>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 Fertige Pläne -->
+  <section class="sec wrap" id="plaene">
+    <header class="sh rv">
+      <Wegpunkt zeichen="gipfel" name="Wegpunkt 4" km={12.5} hoehe={1870} steigung={8.5} />
+      <h2>Fertige Pläne</h2>
+      <p class="lead">Laden, Trainingstage wählen, losfahren. Das Höhenprofil zeigt, wie viel jede Woche von dir will.</p>
+    </header>
+    <Planvorschau />
+  </section>
+
+  <!-- 6 Was du brauchst -->
+  <section class="sec wrap" id="geraete">
+    <header class="sh rv">
+      <Wegpunkt zeichen="ort" name="Wegpunkt 5" km={15.8} hoehe={2095} steigung={6.8} />
+      <h2>Was du brauchst</h2>
+      <p class="lead">Die Packliste ist kurz. Zwei Dinge sind Pflicht, der Rest ist Zugabe.</p>
+    </header>
+    <Packliste />
+  </section>
+
+  <!-- 7 Unterstützen -->
+  <section class="sec wrap" id="unterstuetzen">
+    <header class="sh rv">
+      <Wegpunkt zeichen="aussicht" name="Wegpunkt 6" km={18.6} hoehe={2330} steigung={8.4} />
+      <h2>Unterstützen</h2>
+    </header>
+    <Spendenkarte />
+  </section>
+
+  <!-- 8 Fragen und Antworten -->
+  <section class="sec wrap" id="fragen">
+    <header class="sh rv">
+      <Wegpunkt zeichen="ort" name="Wegpunkt 7" km={21.7} hoehe={2560} steigung={7.4} />
+      <h2>Fragen und Antworten</h2>
+    </header>
+    <Fragen fragen={fragen} />
+  </section>
+
+  <!-- 9 Abschluss: Passhöhe -->
+  <section class="sec wrap end" id="passhoehe">
+    <Wegpunkt zeichen="gipfel" name="Passhöhe" km={24.4} hoehe={2757} steigung={7.3} einblenden />
+    <Passhoehe />
+    <h2 class="rv">Kein Konto, kein Abo. Deine Fahrten bleiben bei dir.</h2>
+    <Aufruf einblenden mittig />
+  </section>
+</div>
 </Seite>

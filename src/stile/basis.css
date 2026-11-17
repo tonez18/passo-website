@@ -56,3 +56,4 @@ html:not(.js) .th,html:not(.js) .menu-b{display:none}
 .foot small{display:block;font-size:13.5px;max-width:46em;margin-top:26px;line-height:1.55}
 .nav a[aria-current]{color:var(--text)}
 .foot-t{margin-top:10px;max-width:24em}
+.hint-m{justify-content:center}

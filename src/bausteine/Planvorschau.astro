@@ -1,0 +1,43 @@
+---
+// Drei Plankarten der Startseite.
+// VORLÄUFIG: statischer Baustein mit den Werten aus dem Mockup. Task 6 schließt ihn an die echten Plandaten an
+// (sammlePlaene(), erste drei Einträge, Baustein Plankarte) und verlinkt jede Karte auf ihre Planseite.
+import { pfad } from '../einstellungen';
+const plaene = pfad('/plaene/');
+---
+<div class="plans">
+  <a class="plan rv" href={plaene} style="--i:0">
+    <span class="clipg"><i class="glow"></i></span>
+    <span class="plan-k"><span class="chip">6 Wochen</span><span class="chip">3 Einheiten pro Woche</span></span>
+    <h3>Einsteiger-Aufbau</h3>
+    <p>Von 30 Minuten bis zur Stunde, fast alles locker. Zum Schluss ein Rampentest als erster FTP-Wert.</p>
+    <span class="prof" data-w="105,140,150,105,155,105" data-n="Ankommen||Erste Tempo-Stücke|Leichtere Woche||Dein erster FTP-Wert">
+      <svg viewBox="0 0 300 96" preserveAspectRatio="none" role="img" aria-label="Wochenlast über 6 Wochen: 105, 140, 150, 105, 155 und 105 Minuten"><path class="gl" d="M0 37.300h300M0 60.700h300"/><path class="ar" d="M12 92L12 59.500L67.200 51.300L122.400 49L177.600 59.500L232.800 47.800L288 59.500L288 92Z"/><path class="ln" d="M12 59.500L67.200 51.300L122.400 49L177.600 59.500L232.800 47.800L288 59.500"/></svg>
+      <i class="cover"></i><i class="mk"></i>
+    </span>
+    <span class="prof-r"><span>Wochenlast</span><b class="num">105–155 min je Woche</b></span>
+  </a>
+  <a class="plan rv" href={plaene} style="--i:1">
+    <span class="clipg"><i class="glow"></i></span>
+    <span class="plan-k"><span class="chip">8 Wochen</span><span class="chip">3 Einheiten pro Woche</span></span>
+    <h3>Zone 2 Grundlage</h3>
+    <p>Ruhige Ausdauer bei 60–70 % FTP, von 60 auf 120 Minuten. Wochen 4 und 8 sind leichter.</p>
+    <span class="prof" data-w="210,210,240,150,255,285,285,210" data-n="|||Leichtere Woche||||Leichtere Woche">
+      <svg viewBox="0 0 300 96" preserveAspectRatio="none" role="img" aria-label="Wochenlast über 8 Wochen: 210, 210, 240, 150, 255, 285, 285 und 210 Minuten"><path class="gl" d="M0 37.300h300M0 60.700h300"/><path class="ar" d="M12 92L12 35L51.400 35L90.900 28L130.300 49L169.700 24.500L209.100 17.500L248.600 17.500L288 35L288 92Z"/><path class="ln" d="M12 35L51.400 35L90.900 28L130.300 49L169.700 24.500L209.100 17.500L248.600 17.500L288 35"/></svg>
+      <i class="cover"></i><i class="mk"></i>
+    </span>
+    <span class="prof-r"><span>Wochenlast</span><b class="num">150–285 min je Woche</b></span>
+  </a>
+  <a class="plan rv" href={plaene} style="--i:2">
+    <span class="clipg"><i class="glow"></i></span>
+    <span class="plan-k"><span class="chip">8 Wochen</span><span class="chip">3 Einheiten pro Woche</span></span>
+    <h3>FTP verbessern</h3>
+    <p>Sweet Spot und Schwelle, samstags lang locker. Rampentest am Anfang und am Ende.</p>
+    <span class="prof" data-w="175,218,215,165,236,223,255,115" data-n="Startwert: Rampentest|||Erholung||||Dein neuer FTP-Wert">
+      <svg viewBox="0 0 300 96" preserveAspectRatio="none" role="img" aria-label="Wochenlast über 8 Wochen: 175, 218, 215, 165, 236, 223, 255 und 115 Minuten"><path class="gl" d="M0 37.300h300M0 60.700h300"/><path class="ar" d="M12 92L12 43.200L51.400 33.100L90.900 33.800L130.300 45.500L169.700 28.900L209.100 32L248.600 24.500L288 57.200L288 92Z"/><path class="ln" d="M12 43.200L51.400 33.100L90.900 33.800L130.300 45.500L169.700 28.900L209.100 32L248.600 24.500L288 57.200"/></svg>
+      <i class="cover"></i><i class="mk"></i>
+    </span>
+    <span class="prof-r"><span>Wochenlast</span><b class="num">115–255 min je Woche</b></span>
+  </a>
+</div>
+<a class="more rv" href={plaene}>Alle Pläne ansehen<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>

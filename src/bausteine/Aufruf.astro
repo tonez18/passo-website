@@ -1,0 +1,14 @@
+---
+// Die beiden Knöpfe (laden, unterstützen) mit der Zeile darunter; im Hero und im Abschluss.
+import Knopf from './Knopf.astro';
+import LadeKnopf from './LadeKnopf.astro';
+import { ladeKnopf, pfad } from '../einstellungen';
+interface Props { einblenden?: boolean; mittig?: boolean }
+const { einblenden = false, mittig = false } = Astro.props;
+const { hinweis } = ladeKnopf();
+---
+<div class:list={['cta', einblenden && 'rv']}>
+  <LadeKnopf />
+  <Knopf href={pfad('/') + '#unterstuetzen'} art="neben"><svg width="18" height="18" aria-hidden="true"><use href="#i-heart"/></svg>Unterstützen</Knopf>
+</div>
+<p class:list={['hint', einblenden && 'rv', mittig && 'hint-m']}>{hinweis && <span>{hinweis}</span>}<span>iPhone · iPad · Apple TV</span></p>

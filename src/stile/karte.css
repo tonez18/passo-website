@@ -179,6 +179,7 @@ h1 span{display:block}
 .end-il{width:100%;height:auto;border-radius:20px;border:1px solid var(--linie);margin-top:8px}
 .end h2{max-width:16em;margin:44px auto 0}
 .end .cta{justify-content:center}
+.end>h2:first-of-type{margin-top:8px}
 
 /* Import-Schritte (Planseiten) */
 .imp{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:26px}

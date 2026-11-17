@@ -1,0 +1,9 @@
+---
+// Fragen und Antworten zum Aufklappen (<details>, geht ohne JavaScript).
+import type { Frage } from '../daten/fragen';
+interface Props { fragen: Frage[] }
+const { fragen } = Astro.props;
+---
+<div class="faq rv">
+  {fragen.map((f) => <details><summary>{f.frage}<svg aria-hidden="true"><use href="#i-plus"/></svg></summary><p>{f.antwort}</p></details>)}
+</div>

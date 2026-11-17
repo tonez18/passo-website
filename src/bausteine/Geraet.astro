@@ -1,0 +1,25 @@
+---
+// App-Bild im Geräterahmen. Beide Fassungen stehen im HTML; CSS zeigt die zum Design passende.
+// Fehlt die helle Fassung (z. B. Apple TV), bleibt das dunkle Bild in beiden Designs.
+import { Image } from 'astro:assets';
+interface Props {
+  art: 'telefon' | 'tablet' | 'tv';
+  dunkel: ImageMetadata;
+  hell?: ImageMetadata;
+  alt: string;
+  /** Breiten in px, in denen das Bild erzeugt wird. */
+  breiten: number[];
+  /** sizes-Angabe: wie breit das Bild auf der Seite steht. */
+  groesse: string;
+  /** Hero-Bild: sofort laden statt erst beim Näherkommen. */
+  sofort?: boolean;
+}
+const { art, dunkel, hell, alt, breiten, groesse, sofort = false } = Astro.props;
+const klasse = { telefon: 'phone', tablet: 'pad', tv: 'tv' }[art];
+const laden = sofort ? 'eager' : 'lazy';
+const bis = (b: ImageMetadata) => breiten.filter((w) => w <= b.width);
+---
+<div class:list={['dev', klasse]}>
+  <Image class:list={['im-d', hell && 'sw']} src={dunkel} alt={alt} widths={bis(dunkel)} sizes={groesse} loading={laden} />
+  {hell && <Image class="im-l" src={hell} alt={alt} widths={bis(hell)} sizes={groesse} loading={laden} />}
+</div>
