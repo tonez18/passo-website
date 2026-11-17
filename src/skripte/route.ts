@@ -49,6 +49,44 @@ export function xAufSpur(y: number, sy: number[], sx: number[]): number {
   return sx[a] + (sx[b] - sx[a]) * t;
 }
 
+/**
+ * Legt die Spur durch die Wegpunkte: senkrechte Stücke, vor jedem Wegpunkt ein Bogen (höchstens `bogen` px hoch) auf dessen
+ * Seite; `halb` ist der halbe Durchmesser des Wegpunkt-Zeichens. Liefert den SVG-Pfad und Stützpunkte (sy aufsteigend, sx dazu),
+ * damit der Fahrerpunkt der Spur folgt, ohne dass der Browser den Pfad ausmessen muss.
+ */
+export function legeSpur(punkte: number[][], halb: number, bogen: number): { d: string; sy: number[]; sx: number[] } {
+  const sy: number[] = [];
+  const sx: number[] = [];
+  const stuetze = (x: number, y: number): void => {
+    if (!sy.length || y > sy[sy.length - 1]) { sy.push(y); sx.push(x); } else sx[sx.length - 1] = x;
+  };
+  let d = 'M' + punkte[0][0] + ' ' + punkte[0][1].toFixed(1);
+  stuetze(punkte[0][0], punkte[0][1]);
+  for (let i = 1; i < punkte.length; i++) {
+    const a = punkte[i - 1];
+    const b = punkte[i];
+    const ende = b[1] - halb;
+    const g = Math.max(0, Math.min(bogen, ende - a[1] - halb - 6));
+    const anfang = ende - g;
+    const y1 = anfang + g * 0.78;
+    const y2 = ende - g * 0.78;
+    d += 'L' + a[0] + ' ' + anfang.toFixed(1) + 'C' + a[0] + ' ' + y1.toFixed(1) + ' ' + b[0] + ' ' + y2.toFixed(1) + ' ' + b[0] + ' ' + ende.toFixed(1) + 'L' + b[0] + ' ' + b[1].toFixed(1);
+    stuetze(a[0], anfang);
+    if (g > 0 && a[0] !== b[0]) {
+      const teile = 24;
+      for (let k = 1; k < teile; k++) {
+        const t = k / teile;
+        const u = 1 - t;
+        // kubische Bézierkurve; x hat die Kontrollpunkte a, a, b, b
+        stuetze(a[0] * (u * u * u + 3 * u * u * t) + b[0] * (3 * u * t * t + t * t * t), u * u * u * anfang + 3 * u * u * t * y1 + 3 * u * t * t * y2 + t * t * t * ende);
+      }
+    }
+    stuetze(b[0], ende);
+    stuetze(b[0], b[1]);
+  }
+  return { d, sy, sx };
+}
+
 /** Ganze Zahl mit Tausenderlücke: 2757 → '2 757'. */
 export function zahlText(n: number): string {
   return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');

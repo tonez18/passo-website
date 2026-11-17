@@ -2,7 +2,7 @@
 // Der Fahrerpunkt folgt, Wegpunkte rasten ein, im Kopf laufen km und Höhe mit.
 // data-spur="links" am #page hält alle Wegpunkte auf der linken Spur; sonst wechselt die Route die Seite.
 import { imTakt, wecke } from './takt';
-import { erreicht, naehern, positionsText, routenStelle, xAufSpur } from './route';
+import { erreicht, legeSpur, naehern, positionsText, routenStelle, xAufSpur } from './route';
 
 export function starteSpur(ruhig: boolean): void {
   const wurzel = document.documentElement;
@@ -51,28 +51,14 @@ export function starteSpur(ruhig: boolean): void {
       return [x, r.top - kasten.top + r.height / 2];
     });
     const halb = window.innerWidth < 700 ? 12 : window.innerWidth < 1080 ? 16 : 20;
-    let d = 'M' + punkte[0][0] + ' ' + punkte[0][1].toFixed(1);
-    for (let i = 1; i < punkte.length; i++) {
-      const a = punkte[i - 1];
-      const b = punkte[i];
-      const ende = b[1] - halb;
-      const g = Math.max(0, Math.min(bogen, ende - a[1] - halb - 6));
-      const anfang = ende - g;
-      d += 'L' + a[0] + ' ' + anfang.toFixed(1) + 'C' + a[0] + ' ' + (anfang + g * 0.78).toFixed(1) + ' ' + b[0] + ' ' + (ende - g * 0.78).toFixed(1) + ' ' + b[0] + ' ' + ende.toFixed(1) + 'L' + b[0] + ' ' + b[1].toFixed(1);
-    }
+    const gelegt = legeSpur(punkte, halb, bogen);
+    const d = gelegt.d;
+    sy = gelegt.sy;
+    sx = gelegt.sx;
     for (const p of [grund!, spur!]) {
       p.setAttribute('d', d);
       p.parentElement!.setAttribute('width', String(breite));
       p.parentElement!.setAttribute('height', String(hoeheSeite));
-    }
-    // Stützpunkte alle 5 px, damit der Fahrerpunkt der Spur ohne Messung je Bild folgt
-    const laenge = spur!.getTotalLength();
-    const n = Math.ceil(laenge / 5);
-    sy = [];
-    sx = [];
-    for (let k = 0; k <= n; k++) {
-      const p = spur!.getPointAtLength((laenge * k) / n);
-      if (!sy.length || p.y > sy[sy.length - 1]) { sy.push(p.y); sx.push(p.x); } else sx[sx.length - 1] = p.x;
     }
     ys = punkte.map((p) => p[1]);
     gezeichnet = -1;

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { klemme, routenStelle, fortschritt, abschnittBei, erreicht, xAufSpur, zahlText, kmText, positionsText, naehern } from '../src/skripte/route';
+import { klemme, routenStelle, fortschritt, abschnittBei, erreicht, xAufSpur, legeSpur, zahlText, kmText, positionsText, naehern } from '../src/skripte/route';
 
 // Die Wegpunkte der Startseite: km und Höhe vom Start (908 m) bis zur Passhöhe (2 757 m)
 const KM = [0, 3.1, 6.4, 9.2, 12.5, 15.8, 18.6, 21.7, 24.4];
@@ -79,5 +79,29 @@ describe('Nachlauf', () => {
     expect(naehern(0, 100)).toBeCloseTo(14);
     expect(naehern(99.8, 100)).toBe(100);
     expect(naehern(-1, 100)).toBe(100); // erster Aufruf: sofort am Ziel
+  });
+});
+
+describe('Spur durch die Wegpunkte', () => {
+  const spur = legeSpur([[20, 100], [380, 500], [20, 900]], 12, 100);
+  it('beginnt am ersten und endet am letzten Wegpunkt', () => {
+    expect(spur.d.startsWith('M20 100.0')).toBe(true);
+    expect(spur.d.endsWith('L20 900.0')).toBe(true);
+    expect(spur.sy[0]).toBe(100);
+    expect(spur.sy[spur.sy.length - 1]).toBe(900);
+  });
+  it('hat aufsteigende Stützpunkte', () => {
+    for (let i = 1; i < spur.sy.length; i++) expect(spur.sy[i]).toBeGreaterThan(spur.sy[i - 1]);
+    expect(spur.sx).toHaveLength(spur.sy.length);
+  });
+  it('bleibt bis zum Bogen auf der Seite des letzten Wegpunkts und wechselt im Bogen', () => {
+    expect(xAufSpur(300, spur.sy, spur.sx)).toBe(20); // Bogen beginnt bei 500 − 12 − 100 = 388
+    expect(xAufSpur(438, spur.sy, spur.sx)).toBeCloseTo(200, 0); // Mitte des Bogens
+    expect(xAufSpur(495, spur.sy, spur.sx)).toBe(380);
+    expect(xAufSpur(700, spur.sy, spur.sx)).toBe(380);
+  });
+  it('bleibt auf einer Spur gerade', () => {
+    const gerade = legeSpur([[20, 100], [20, 500]], 12, 100);
+    expect(xAufSpur(444, gerade.sy, gerade.sx)).toBe(20);
   });
 });

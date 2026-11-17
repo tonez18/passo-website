@@ -6,8 +6,6 @@ import { klemme } from './route';
 /** Ob der Hero gerade im Bild ist (auch für die Zeigereffekte). */
 export const held = { imBild: true };
 
-const STUETZEN = 700;
-
 export function starteKarte(fein: boolean): void {
   const hero = document.querySelector<HTMLElement>('.hero');
   if (!hero) return;
@@ -17,22 +15,20 @@ export function starteKarte(fein: boolean): void {
   const fahrer = document.getElementById('roadRider');
   const strasse = document.getElementById('road') as SVGPathElement | null;
   const geraete = document.getElementById('devsIn');
-  const punkte: [number, number][] = [];
-  if (fahrer && strasse && typeof strasse.getTotalLength === 'function') {
-    const laenge = strasse.getTotalLength();
-    for (let i = 0; i <= STUETZEN; i++) { const p = strasse.getPointAtLength((laenge * i) / STUETZEN); punkte.push([p.x, p.y]); }
-  }
+  // Die Straße wird nicht vorab ausgemessen (das kostet beim Laden spürbar Zeit), sondern je Bild an einer Stelle.
+  const laenge = fahrer && strasse && typeof strasse.getTotalLength === 'function' ? strasse.getTotalLength() : 0;
+  let stelle = -1;
 
   imTakt((zeit) => {
     if (!held.imBild) return false;
-    if (punkte.length) {
-      // eine Auffahrt dauert knapp zwei Minuten
-      const u = ((zeit * 0.0000085) % 1) * STUETZEN;
-      const i = Math.floor(u);
-      const a = punkte[i];
-      const b = punkte[Math.min(STUETZEN, i + 1)];
-      const m = u - i;
-      fahrer!.setAttribute('transform', 'translate(' + (a[0] + (b[0] - a[0]) * m).toFixed(1) + ' ' + (a[1] + (b[1] - a[1]) * m).toFixed(1) + ')');
+    if (laenge) {
+      // eine Auffahrt dauert knapp zwei Minuten; neu gesetzt wird ab einem halben Kartenpunkt Weg
+      const neu = ((zeit * 0.0000085) % 1) * laenge;
+      if (Math.abs(neu - stelle) >= 0.5) {
+        stelle = neu;
+        const p = strasse!.getPointAtLength(neu);
+        fahrer!.setAttribute('transform', 'translate(' + p.x.toFixed(1) + ' ' + p.y.toFixed(1) + ')');
+      }
     }
     if (!fein && geraete) {
       const s = klemme(window.scrollY / (hero.offsetHeight || 1), 0, 1);
