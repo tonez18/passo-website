@@ -1,0 +1,1 @@
+{"format":"passo-plan","version":1,"plan":{"name":"Berg","description":"Beschreibung Berg","weeks":[{"note":"","days":{"1":{"ref":"a"}}}]},"workouts":[{"ref":"a","workout":{"name":"Locker","description":"","steps":[{"type":"steady","seconds":600,"power":{"type":"ftp","pct":60}}]}}]}
