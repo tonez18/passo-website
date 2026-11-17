@@ -9,7 +9,7 @@ export const einstellungen = {
   /** false hält Suchmaschinen fern (bis die Domain steht). */
   indexierbar: false,
   /** Öffentlicher TestFlight-Link. */
-  testflightUrl: '',
+  testflightUrl: 'https://testflight.apple.com/join/rGhp1TFk',
   /** App-Store-Link; ist er gesetzt, ersetzt er den TestFlight-Link. */
   appStoreUrl: '',
   /** Ko-fi-Seite für Spenden. */
