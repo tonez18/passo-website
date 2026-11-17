@@ -1,0 +1,111 @@
+---
+// Planseite: der Plan als Tour. Tourenprofil mit anklickbaren Wochen, jede Woche eine Etappe an der Routenspur,
+// je Einheit Wochentag, Name, Dauer und Trainingsprofil. Alles kommt aus der .passoplan-Datei.
+import type { GetStaticPaths } from 'astro';
+import Seite from '../../layouts/Seite.astro';
+import Route from '../../bausteine/Route.astro';
+import KartenKopf from '../../bausteine/KartenKopf.astro';
+import Wochenlast from '../../bausteine/Wochenlast.astro';
+import Trainingsprofil from '../../bausteine/Trainingsprofil.astro';
+import ImportSchritte from '../../bausteine/ImportSchritte.astro';
+import { sammlePlaene, type Eintrag } from '../../plaene/sammlung';
+import { WOCHENTAGE } from '../../plaene/leser';
+import { skala, werte, textBloecke } from '../../plaene/darstellung';
+import { pfad } from '../../einstellungen';
+
+export const getStaticPaths = (async () => {
+  const alle = await sammlePlaene();
+  const max = skala(alle.map((e) => e.plan.wochen.map((w) => w.minuten)));
+  return alle.map((eintrag) => ({ params: { slug: eintrag.slug }, props: { eintrag, andere: alle.filter((e) => e !== eintrag), max } }));
+}) satisfies GetStaticPaths;
+
+interface Props { eintrag: Eintrag; andere: Eintrag[]; max: number }
+const { eintrag, andere, max } = Astro.props;
+const { plan, slug } = eintrag;
+const drei = werte(plan);
+const anzahl = plan.wochen.length;
+const wochenText = drei[0];
+const gesamt = plan.wochen.reduce((summe, w) => summe + w.minuten, 0);
+const datei = slug + '.passoplan';
+const laden = pfad('/plaene/' + datei);
+const einheiten = (n: number) => (n === 1 ? '1 Einheit' : n + ' Einheiten');
+const text = eintrag.text ? textBloecke(eintrag.text) : [];
+---
+<Seite
+  titel={eintrag.seoTitel ?? `${plan.name} – Trainingsplan für Passo`}
+  beschreibung={plan.beschreibung || `${plan.name}: Trainingsplan für Passo über ${wochenText}.`}
+  pfadname={`/plaene/${slug}/`}
+  position={`Start · ${wochenText}`}
+>
+<div class="page" id="page" data-spur="links">
+  <Route />
+
+  <KartenKopf>
+    <div class="wrap hero-s-in hero-plan">
+      <div>
+        <nav class="crumb" aria-label="Brotkrumen"><a href={pfad('/plaene/')}>Pläne</a><span aria-hidden="true">›</span><span aria-current="page">{plan.name}</span></nav>
+        <h1>{plan.name}</h1>
+        {plan.beschreibung && <p class="sub">{plan.beschreibung}</p>}
+        <p class="vals">{drei.map((w) => <span class="chip">{w}</span>)}</p>
+      </div>
+      <div class="dl">
+        <a class="btn btn-p" href={laden} download={datei}>Plan laden (.passoplan)</a>
+        <small>{plan.nurFtp ? 'Kostenlos · alle Werte in % deiner FTP' : 'Kostenlos'}</small>
+      </div>
+    </div>
+    <div class="wrap sheet">
+      <p class="leg" data-pos={`Start · ${wochenText}`}><span class="wp"><svg aria-hidden="true"><use href="#poi-place"/></svg></span><b>Start</b><span>{anzahl === 1 ? '1 Etappe' : anzahl + ' Etappen'}</span><span>{gesamt} min gesamt</span></p>
+      <span class="sheet-i">Tag 1 = Montag</span>
+    </div>
+  </KartenKopf>
+
+  <section class="wrap tour-sec">
+    <div class="tour rv">
+      <h2 class="tour-h">Tourenprofil</h2>
+      <Wochenlast wochen={plan.wochen} max={max} gross />
+    </div>
+    <ul class="zleg" aria-label="Farben der Trainingsprofile">
+      <li><i class="z1"></i>Z1 bis 55 %</li><li><i class="z2"></i>Z2 bis 75 %</li><li><i class="z3"></i>Z3 bis 90 %</li><li><i class="z4"></i>Z4 bis 105 %</li><li><i class="z5"></i>Z5 bis 120 %</li><li><i class="z6"></i>Z6 und Z7 darüber</li>{!plan.nurFtp && <li><i class="zg"></i>frei oder feste Watt</li>}<li><i class="zf"></i>Linie = 100 % FTP</li>
+    </ul>
+  </section>
+
+  {plan.wochen.map((w) => (
+    <section class="week wrap" id={'woche-' + w.nummer}>
+      <p class="leg" data-pos={`Woche ${w.nummer} · ${w.minuten} min`}><span class="wp"><svg aria-hidden="true"><use href={w.nummer === anzahl ? '#poi-peak' : '#poi-place'}/></svg></span><b>Etappe {w.nummer}</b><span>{einheiten(w.tage.length)}</span><span>{w.minuten} min</span></p>
+      <h2 class="wk-h">Woche {w.nummer}{w.notiz && <Fragment>{' '}<span>{w.notiz}</span></Fragment>}</h2>
+      <ol class="units rv">
+        {w.tage.map((t) => (
+          <li class="unit"><span class="u-d">{WOCHENTAGE[t.wochentag - 1]}</span><span class="u-n"><b>{t.training.name}</b>{t.training.beschreibung && <small>{t.training.beschreibung}</small>}</span><span class="u-t num">{Math.round(t.training.sekunden / 60)} min</span><Trainingsprofil training={t.training} /></li>
+        ))}
+      </ol>
+    </section>
+  ))}
+
+  {text.length > 0 && (
+    <section class="week wrap ptext rv">
+      {text.map((b) => b.art === 'titel' ? <h2 class="wk-h">{b.text}</h2> : b.art === 'liste' ? <ul>{b.punkte.map((p) => <li>{p}</li>)}</ul> : <p>{b.text}</p>)}
+    </section>
+  )}
+
+  <section class="sec wrap" id="laden">
+    <p class="leg rv" data-pos="Ziel · Plan laden"><span class="wp"><svg aria-hidden="true"><use href="#poi-peak"/></svg></span><b>Ziel</b><span>{wochenText}</span><span>{drei[1]} je Woche</span></p>
+    <div class="getit rv">
+      <div><h2>Plan laden und losfahren</h2><p class="lead">Die Datei öffnet sich in Passo. Dort passt du Tage und Einheiten an.</p></div>
+      <a class="btn btn-p" href={laden} download={datei}>Plan laden (.passoplan)</a>
+    </div>
+    <ImportSchritte />
+    {andere.length > 0 && (
+      <Fragment>
+        <h2 class="oth-h rv">Weitere Pläne</h2>
+        <div class="others rv">
+          {andere.map((e) => <a class="oth" href={pfad(`/plaene/${e.slug}/`)}><b>{e.plan.name}</b><span>{werte(e.plan).join(' · ')}</span><svg aria-hidden="true"><use href="#i-arrow"/></svg></a>)}
+        </div>
+      </Fragment>
+    )}
+  </section>
+</div>
+<Fragment slot="danach">
+  <div class="dlbar"><a class="btn btn-p" href={laden} download={datei}>Plan laden (.passoplan)</a></div>
+  <div class="tip" id="tip" role="status" aria-live="polite"></div>
+</Fragment>
+</Seite>

@@ -1,11 +1,13 @@
 // Einstieg für alle Bewegung der Seite.
 // - Einblenden: .rv-Teile und die Hero-Geräte bekommen .in, sobald sie ins Bild kommen.
 // - Route mit Fahrerpunkt (spur.ts), Hero-Karte (karte.ts), Reaktionen auf die Maus (zeiger.ts).
+// - Hinweis an den Balken der Trainingsprofile (hinweis.ts), mit Maus und per Tipp.
 // Mit „Bewegung reduzieren“ steht alles im Endzustand: kein .anim am <html> (Vorabskript), die Route ist fertig gezeichnet,
 // Hero-Karte und Zeigereffekte starten nicht. Ohne Maus (Touch) entfallen die Zeigereffekte.
 import { starteSpur } from './spur';
 import { starteKarte } from './karte';
 import { starteZeiger } from './zeiger';
+import { starteHinweis } from './hinweis';
 
 const wurzel = document.documentElement;
 const ruhig = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -23,6 +25,7 @@ if (wurzel.classList.contains('anim') && 'IntersectionObserver' in window) {
 }
 
 starteSpur(ruhig);
+starteHinweis();
 if (!ruhig) {
   starteKarte(fein);
   if (fein) starteZeiger();

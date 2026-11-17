@@ -1,0 +1,28 @@
+---
+// Trainingsprofil einer Einheit: ein Balken je Schritt, Breite = Dauer, Höhe = % FTP, Farbe = Zone; die gestrichelte Linie ist 100 % FTP.
+// Feste Watt und freie Abschnitte sind grau. Der Hinweis am Balken (data-tip) kommt aus skripte/hinweis.ts;
+// ohne JavaScript zeigt der Browser den <title> des Balkens.
+import type { Training } from '../plaene/leser';
+import { profil, spanneProzent } from '../plaene/profil';
+interface Props { training: Training }
+const { training } = Astro.props;
+const B = 1000;
+const H = 60;
+const r1 = (n: number) => Number(n.toFixed(1));
+const balken = profil(training);
+let x = 0;
+const rechtecke = balken.map((b) => {
+  const breite = b.anteil * B;
+  const hoehe = Math.max(3, b.hoehe * H);
+  const luecke = b.anschluss ? 0 : Math.min(2.5, breite * 0.2);
+  const r = { klasse: b.zone === null ? 'zg' : 'z' + b.zone, x: r1(x + luecke), y: r1(H - hoehe), breite: r1(Math.max(0.6, breite - luecke)), hoehe: r1(hoehe), titel: b.titel };
+  x += breite;
+  return r;
+});
+const spanne = spanneProzent(balken);
+const grau = balken.some((b) => b.zone === null);
+const beschriftung = `Trainingsprofil ${training.name}: ${Math.round(training.sekunden / 60)} Minuten`
+  + (spanne ? `, ${spanne.min === spanne.max ? spanne.min : spanne.min + ' bis ' + spanne.max} % FTP` : '')
+  + (grau ? (spanne ? ', teils frei oder in festen Watt' : ', frei oder in festen Watt') : '');
+---
+<span class="wprof"><svg viewBox={`0 0 ${B} ${H}`} preserveAspectRatio="none" role="img" aria-label={beschriftung}>{rechtecke.map((r) => <rect class={r.klasse} x={r.x} y={r.y} width={r.breite} height={r.hoehe} data-tip={r.titel}><title>{r.titel}</title></rect>)}<path class="ftp" d={`M0 ${H - (100 / 150) * H}h${B}`}/></svg><i class="cover"></i></span>

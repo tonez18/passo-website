@@ -3,6 +3,7 @@
 import '../stile/farben.css';
 import '../stile/basis.css';
 import '../stile/karte.css';
+import '../stile/plaene.css';
 import '../stile/bewegung.css';
 import Symbole from '../bausteine/Symbole.astro';
 import Kopf from '../bausteine/Kopf.astro';
@@ -48,6 +49,7 @@ if(matchMedia('(prefers-reduced-motion: reduce)').matches)d.setAttribute('data-r
 <slot />
 </main>
 <Fuss />
+<slot name="danach" />
 <script>
   import '../skripte/thema';
   import '../skripte/menue';

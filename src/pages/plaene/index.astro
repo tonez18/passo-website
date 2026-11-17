@@ -1,0 +1,70 @@
+---
+// Planübersicht: Blatt 2 des Kartenblatts. Jede .passoplan-Datei im Ordner plaene/ ist eine Tour.
+import Seite from '../../layouts/Seite.astro';
+import Route from '../../bausteine/Route.astro';
+import KartenKopf from '../../bausteine/KartenKopf.astro';
+import Wegpunkt from '../../bausteine/Wegpunkt.astro';
+import Plankarte from '../../bausteine/Plankarte.astro';
+import ImportSchritte from '../../bausteine/ImportSchritte.astro';
+import LadeKnopf from '../../bausteine/LadeKnopf.astro';
+import Knopf from '../../bausteine/Knopf.astro';
+import { sammlePlaene } from '../../plaene/sammlung';
+import { skala, zahlwort } from '../../plaene/darstellung';
+import { ladeKnopf, pfad } from '../../einstellungen';
+
+const plaene = await sammlePlaene();
+const max = skala(plaene.map((e) => e.plan.wochen.map((w) => w.minuten)));
+const anzahl = plaene.length;
+const touren = anzahl === 1 ? 'Eine Tour' : `${zahlwort(anzahl)} Touren`;
+// Der Satz zur FTP steht nur, wenn er für jeden Plan stimmt (kein Schritt in festen Watt, kein freier Abschnitt).
+const alleFtp = plaene.every((e) => e.plan.nurFtp);
+const { hinweis } = ladeKnopf();
+---
+<Seite
+  titel="Trainingspläne für Passo – kostenlos laden"
+  beschreibung={`${anzahl === 1 ? 'Ein fertiger Trainingsplan' : zahlwort(anzahl) + ' fertige Trainingspläne'} für Passo: kostenlos, ${alleFtp ? 'alle Werte relativ zu deiner FTP, ' : ''}in der App anpassbar.`}
+  pfadname="/plaene/"
+  position="km 0,0 · 908 m"
+>
+<div class="page" id="page">
+  <Route />
+
+  <KartenKopf>
+    <div class="wrap hero-s-in">
+      <p class="crumb">Blatt 2 · Touren</p>
+      <h1>Fertige Trainingspläne</h1>
+      <p class="sub">Alle Pläne sind kostenlos. {alleFtp ? 'Jede Vorgabe steht in Prozent deiner FTP, und in Passo passt du Tage und Einheiten an dich an.' : 'In Passo passt du Tage und Einheiten an dich an.'}</p>
+    </div>
+    <div class="wrap sheet">
+      <Wegpunkt zeichen="ort" name="Start" km={0} hoehe={908} />
+      <span class="sheet-i">{anzahl === 1 ? '1 Tour' : anzahl + ' Touren'}</span><span class="sheet-i">Format .passoplan</span>
+    </div>
+  </KartenKopf>
+
+  <section class="sec wrap" id="touren">
+    <header class="sh rv">
+      <Wegpunkt zeichen="aussicht" name="Wegpunkt 1" km={8.1} hoehe={1620} steigung={8.8} />
+      <h2>{touren} auf einem Blatt</h2>
+      <p class="lead">Das Höhenprofil jeder Karte zeigt die Minuten je Woche. Fahr mit dem Zeiger darüber, um die Wochen zu lesen.</p>
+    </header>
+    <div class="plans plans-all">
+      {plaene.map((eintrag, i) => <Plankarte eintrag={eintrag} nummer={i} max={max} />)}
+    </div>
+  </section>
+
+  <section class="sec wrap" id="import">
+    <header class="sh rv">
+      <Wegpunkt zeichen="ort" name="Wegpunkt 2" km={16.3} hoehe={2190} steigung={7} />
+      <h2>So kommt der Plan in Passo</h2>
+    </header>
+    <ImportSchritte />
+  </section>
+
+  <section class="sec wrap end" id="ziel">
+    <Wegpunkt zeichen="gipfel" name="Passhöhe" km={24.4} hoehe={2757} steigung={7} einblenden />
+    <h2 class="rv">Noch kein Passo? Die App ist kostenlos, ohne Konto, ohne Abo.</h2>
+    <div class="cta rv"><LadeKnopf /><Knopf href={pfad('/')} art="neben">Zur Startseite</Knopf></div>
+    <p class="hint hint-m rv">{hinweis && <span>{hinweis}</span>}<span>iPhone · iPad · Apple TV</span></p>
+  </section>
+</div>
+</Seite>

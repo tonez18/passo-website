@@ -1,0 +1,26 @@
+---
+// Wochenlast eines Plans als kleines Höhenprofil: ein Punkt je Woche, Höhe = Minuten der Woche. Wächst beim Erscheinen von links.
+// Mit Maus zeigt eine Marke Woche, Minuten und Wochennotiz (skripte/zeiger.ts liest data-w, data-n und data-max).
+// „gross“ ist das Tourenprofil der Planseite: Jede Woche ist ein Punkt mit Nummer, der zur Woche springt.
+import type { Woche } from '../plaene/leser';
+import { lastPunkte } from '../plaene/darstellung';
+interface Props {
+  wochen: Woche[];
+  /** Oberes Ende der Skala in Minuten, für alle Pläne gleich (skala()). */
+  max?: number;
+  gross?: boolean;
+}
+const { wochen, max = 300, gross = false } = Astro.props;
+const minuten = wochen.map((w) => w.minuten);
+const punkte = lastPunkte(minuten, max);
+const r1 = (n: number) => Number(n.toFixed(1));
+// eine einzige Woche: waagrechte Linie über die ganze Breite
+const y0 = punkte[0][1];
+const zug = punkte.length > 1 ? punkte.map((p) => p.join(' ')).join('L') : `12 ${y0}L288 ${y0}`;
+const hilfslinien = [100, 200].filter((m) => m < max).map((m) => `M0 ${r1(84 - (m / max) * 70)}h300`).join('');
+---
+<span class:list={['prof', gross && 'tourp']} data-max={max} data-w={minuten.join(',')} data-n={wochen.map((w) => w.notiz).join('|')}>
+  <svg viewBox="0 0 300 96" preserveAspectRatio="none" role="img" aria-label={`Wochenlast über ${wochen.length} ${wochen.length === 1 ? 'Woche' : 'Wochen'}: ${minuten.join(', ')} Minuten`}><path class="gl" d={hilfslinien}/><path class="ar" d={`M12 92L${zug}L288 92Z`}/><path class="ln" d={'M' + zug}/></svg>
+  <i class="cover"></i>{gross && wochen.map((w, i) => <a class="tpt" href={'#woche-' + w.nummer} style={`left:${r1(punkte[i][0] / 3)}%;top:${r1(punkte[i][1] / 0.96)}%`} aria-label={`Zu Woche ${w.nummer}: ${w.minuten} Minuten${w.notiz ? ', ' + w.notiz : ''}`}><span>{w.nummer}</span></a>)}<i class="mk"></i>
+</span>
+<span class="prof-r"><span>{gross ? 'Wochenlast · Zahl antippen springt zur Woche' : 'Wochenlast'}</span><b class="num">{Math.min(...minuten) === Math.max(...minuten) ? minuten[0] : Math.min(...minuten) + '–' + Math.max(...minuten)} min je Woche</b></span>

@@ -1,0 +1,19 @@
+---
+// Kurzer Kartenkopf der Unterseiten: dieselbe Höhenlinien-Karte wie im Hero der Startseite, ohne Passstraße und Gipfel.
+// Der Inhalt (Überschrift, Kartenangabe) kommt als Slot.
+import Hoehenlinien from './Hoehenlinien.astro';
+---
+<section class="hero hero-s">
+  <div class="topo" aria-hidden="true">
+    <Hoehenlinien />
+    <div class="stage">
+      <svg class="tl" data-k="0" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice"><use href="#tl0"/></svg>
+      <svg class="tl" data-k="1" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice"><use href="#tl1"/></svg>
+      <svg class="tl" data-k="2" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice"><use href="#tl2"/></svg>
+      <svg class="tl tx" data-k="1" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice"><use href="#tnum"/></svg>
+    </div>
+    <div class="spot"><div class="spot-in"></div></div>
+    <div class="scrim"></div>
+  </div>
+  <slot />
+</section>
