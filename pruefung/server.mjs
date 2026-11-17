@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { einstellungen } from '../src/einstellungen.ts';
 
 const dist = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../dist');
-const arten = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.webp': 'image/webp', '.ttf': 'font/ttf', '.woff2': 'font/woff2', '.mp4': 'video/mp4', '.json': 'application/json', '.txt': 'text/plain; charset=utf-8', '.xml': 'application/xml' };
+const arten = { '.html': 'text/html; charset=utf-8', '.css': 'text/css', '.js': 'text/javascript', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.webp': 'image/webp', '.woff2': 'font/woff2', '.mp4': 'video/mp4', '.json': 'application/json', '.txt': 'text/plain; charset=utf-8', '.xml': 'application/xml' };
 
 /** Startet den Server auf einem freien Port; gibt Adresse der Startseite und stop() zurück. */
 export async function starteServer() {
