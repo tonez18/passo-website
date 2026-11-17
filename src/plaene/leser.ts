@@ -52,10 +52,14 @@ export function lesePlan(json: string, dateiname: string): Plan {
   const fehler = (grund: string) => new PlanFehler(dateiname, grund);
 
   let daten: unknown;
+  const inhalt = json.charCodeAt(0) === 0xfeff ? json.slice(1) : json; // Bytereihenfolge-Marke am Dateianfang
   try {
-    daten = JSON.parse(json.replace(/^﻿/, ''));
+    daten = JSON.parse(inhalt);
   } catch (e) {
-    throw fehler(`kein gültiges JSON (${e instanceof Error ? e.message : String(e)})`);
+    // Die Stelle steht in der (englischen) Meldung des JSON-Lesers; daraus wird Zeile und Spalte.
+    const stelle = /position (\d+)/.exec(e instanceof Error ? e.message : '');
+    const davor = stelle ? inhalt.slice(0, Number(stelle[1])).split('\n') : null;
+    throw fehler('kein gültiges JSON' + (davor ? ` (Fehler in Zeile ${davor.length}, Spalte ${davor[davor.length - 1].length + 1})` : ''));
   }
   if (!istObjekt(daten) || daten.format !== 'passo-plan') throw fehler('keine Passo-Plandatei (das Feld „format“ ist nicht „passo-plan“)');
   if (daten.version !== 1) throw fehler(`Version ${String(daten.version)} wird nicht unterstützt (erwartet: 1)`);

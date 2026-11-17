@@ -94,6 +94,10 @@ describe('Fehler nennen Datei und Grund auf Deutsch', () => {
   it('kaputtes JSON', () => {
     expect(() => lesePlan('{kaputt', 'x.passoplan')).toThrow(PlanFehler);
     expect(() => lesePlan('{kaputt', 'x.passoplan')).toThrow(/x\.passoplan.*kein gültiges JSON/);
+    expect(() => lesePlan('{\n"format": "passo-plan",\n  oje}', 'x.passoplan')).toThrow(/kein gültiges JSON \(Fehler in Zeile 3, Spalte 3\)/);
+  });
+  it('eine Bytereihenfolge-Marke am Anfang stört nicht', () => {
+    expect(lesePlan(String.fromCharCode(0xfeff) + plan(), 'x.passoplan').name).toBe('Probe');
   });
   it('fremdes Format', () => {
     expect(() => lesePlan(falschesFormat, 'x.passoplan')).toThrow(/x\.passoplan.*keine Passo-Plandatei/);
