@@ -13,7 +13,7 @@ export const einstellungen = {
   /** App-Store-Link; ist er gesetzt, ersetzt er den TestFlight-Link. */
   appStoreUrl: '',
   /** Ko-fi-Seite für Spenden. */
-  kofiUrl: '',
+  kofiUrl: 'https://ko-fi.com/passocycling',
   kontaktEmail: '',
   impressum: { name: '', strasse: '', ort: '' },
 };
