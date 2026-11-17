@@ -25,6 +25,7 @@ const appStore = ladeKnopf().text === 'Im App Store laden';
   <h2>Verantwortlich</h2>
   <address>
     <Angabe wert={impressum.name} name="Name" /><br>
+    {impressum.firma && <>{impressum.firma}<br></>}
     <Angabe wert={impressum.strasse} name="Straße und Hausnummer" /><br>
     <Angabe wert={impressum.ort} name="Postleitzahl und Ort" /><br>
     E-Mail: <Angabe wert={kontaktEmail} name="E-Mail" email />

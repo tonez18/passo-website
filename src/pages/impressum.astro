@@ -16,6 +16,7 @@ const { impressum, kontaktEmail } = einstellungen;
   <h2>Angaben gemäß § 5 DDG</h2>
   <address>
     <Angabe wert={impressum.name} name="Name" /><br>
+    {impressum.firma && <>{impressum.firma}<br></>}
     <Angabe wert={impressum.strasse} name="Straße und Hausnummer" /><br>
     <Angabe wert={impressum.ort} name="Postleitzahl und Ort" />
   </address>

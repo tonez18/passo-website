@@ -7,7 +7,7 @@ const leer: typeof einstellungen = {
   appStoreUrl: '',
   kofiUrl: '',
   kontaktEmail: '',
-  impressum: { name: '', strasse: '', ort: '' },
+  impressum: { name: '', firma: '', strasse: '', ort: '' },
 };
 
 describe('pfad', () => {
@@ -45,10 +45,10 @@ describe('fehlendeAngaben', () => {
     expect(f).toContain('impressum.ort');
     expect(f).toContain('kontaktEmail');
     expect(f).toContain('kofiUrl');
-    expect(f).toContain('testflightUrl');
+    expect(f).not.toContain('testflightUrl');
   });
   it('ist leer, wenn alles da ist', () => {
-    expect(fehlendeAngaben({ ...leer, appStoreUrl: 'https://a', kofiUrl: 'https://k', kontaktEmail: 'a@b.de', impressum: { name: 'N', strasse: 'S', ort: 'O' } })).toEqual([]);
+    expect(fehlendeAngaben({ ...leer, kofiUrl: 'https://k', kontaktEmail: 'a@b.de', impressum: { name: 'N', firma: '', strasse: 'S', ort: 'O' } })).toEqual([]);
   });
 });
 

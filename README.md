@@ -36,7 +36,7 @@ Alle Links, Adressen und Schalter stehen in `src/einstellungen.ts`:
 | `seitenUrl` | Adresse ohne Pfad, z. B. `https://tonez18.github.io` |
 | `basisPfad` | Unterpfad mit Schrägstrich vorn und hinten (`/passo-website/`), mit eigener Domain `/` |
 | `indexierbar` | `false` hält Suchmaschinen fern: `noindex` auf jeder Seite, `robots.txt` sperrt |
-| `testflightUrl` | öffentlicher TestFlight-Link; der Knopf heißt dann „Beta laden“ |
+| `testflightUrl` | öffentlicher TestFlight-Link; der Knopf heißt dann „Beta laden“. Keine Pflicht: ohne ihn steht „Bald verfügbar“ |
 | `appStoreUrl` | App-Store-Link; ist er gesetzt, heißt der Knopf „Im App Store laden“ und der Beta-Hinweis entfällt |
 | `kofiUrl` | Ko-fi-Seite für den Spendenknopf |
 | `kontaktEmail` | E-Mail für Kontakt, Impressum und Datenschutz |

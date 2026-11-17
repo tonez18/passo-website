@@ -14,8 +14,9 @@ export const einstellungen = {
   appStoreUrl: '',
   /** Ko-fi-Seite für Spenden. */
   kofiUrl: 'https://ko-fi.com/passocycling',
-  kontaktEmail: '',
-  impressum: { name: '', strasse: '', ort: '' },
+  kontaktEmail: 'hallo@domi-speh.de',
+  /** firma ist freiwillig und steht unter dem Namen. */
+  impressum: { name: 'Dominik Speh', firma: 'DMNK new media', strasse: 'Obere Straße 46a', ort: '76698 Ubstadt' },
 };
 
 export type Einstellungen = typeof einstellungen;
@@ -38,10 +39,12 @@ export function ladeKnopf(e: Einstellungen = einstellungen): { text: string; url
   return { text: 'Bald verfügbar', url: null, hinweis: null };
 }
 
-/** Namen der leeren Pflichtfelder. Solange hier etwas steht, darf die Seite nicht veröffentlicht werden. */
+/**
+ * Namen der leeren Pflichtfelder. Solange hier etwas steht, darf die Seite nicht veröffentlicht werden.
+ * Der Download-Link ist keine Pflicht: Ohne ihn zeigt der Knopf „Bald verfügbar“.
+ */
 export function fehlendeAngaben(e: Einstellungen = einstellungen): string[] {
   const f: string[] = [];
-  if (!e.testflightUrl && !e.appStoreUrl) f.push('testflightUrl');
   if (!e.kofiUrl) f.push('kofiUrl');
   if (!e.kontaktEmail) f.push('kontaktEmail');
   if (!e.impressum.name) f.push('impressum.name');
