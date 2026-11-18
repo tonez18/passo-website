@@ -1,0 +1,89 @@
+---
+// Datenschutzerklärung der App Passo (für TestFlight, App Store und die Strava-API-Richtlinie 7.3).
+// Angaben zum Verantwortlichen aus src/einstellungen.ts. Der Text ist ein Entwurf und keine Rechtsberatung.
+// Muss zum Stand der App passen: docs/eigener-server.md und lib/l10n/app_de.arb (privacy*) im App-Repository.
+import Textseite from '../bausteine/Textseite.astro';
+import Angabe from '../bausteine/Angabe.astro';
+import { einstellungen, pfad } from '../einstellungen';
+const { impressum, kontaktEmail } = einstellungen;
+---
+<Textseite
+  titel="Datenschutz in der App | Passo"
+  beschreibung="Datenschutz in der App Passo: kein Konto, kein Tracking. Welche Dienste die App wann fragt und welche Daten dabei anfallen."
+  pfadname="/datenschutz-app/"
+  blatt="Blatt 5 · Rechtliches"
+  ueberschrift="Datenschutz in der App"
+>
+  <h2>Kurz gesagt</h2>
+  <ul>
+    <li>Passo braucht kein Konto. Deine Routen, Trainings, Fahrten und Profile bleiben auf deinem Gerät.</li>
+    <li>Passo misst nicht, wie du die App nutzt, zeigt keine Werbung und gibt nichts an Werbe- oder Analysedienste weiter.</li>
+    <li>Ins Internet geht die App nur für bestimmte Aufgaben, etwa wenn du eine Route importierst, eine Überraschungsrunde würfelst, Karten anzeigst oder Strava verbindest. Welche Dienste das sind, steht unten.</li>
+  </ul>
+  <p>Diese Erklärung gilt für die App Passo auf iPhone, iPad und Apple TV. Für die Webseite gilt die <a href={pfad('/datenschutz/')}>Datenschutzerklärung der Webseite</a>.</p>
+
+  <h2>Verantwortlich</h2>
+  <address>
+    <Angabe wert={impressum.name} name="Name" /><br>
+    {impressum.firma && <>{impressum.firma}<br></>}
+    <Angabe wert={impressum.strasse} name="Straße und Hausnummer" /><br>
+    <Angabe wert={impressum.ort} name="Postleitzahl und Ort" /><br>
+    E-Mail: <Angabe wert={kontaktEmail} name="E-Mail" email />
+  </address>
+
+  <h2>Was auf deinem Gerät bleibt</h2>
+  <p>Routen, Trainings, Trainingspläne, Fahrten, Profile mit Name und Bild, Zonen und Einstellungen speichert Passo nur auf deinem Gerät. Der Betreiber kann darauf nicht zugreifen.</p>
+  <ul>
+    <li><strong>Sichern:</strong> Eine Sicherung ist eine Datei, die du selbst über das Teilen-Menü ablegst, zum Beispiel in iCloud Drive oder in Dateien.</li>
+    <li><strong>Geräte abgleichen:</strong> iPhone und iPad gleichen sich direkt in deinem WLAN ab, ohne Server dazwischen.</li>
+    <li><strong>Apple TV:</strong> Während der Fahrt schickt das iPhone die Anzeige direkt im WLAN an deinen Apple TV.</li>
+    <li><strong>Bluetooth:</strong> Passo verbindet Trainer, Sensoren und Controller. Die Messwerte bleiben auf dem Gerät.</li>
+  </ul>
+
+  <h2>Dienste, die die App nutzt</h2>
+  <p>Bei jeder Anfrage an einen Dienst sieht dieser technisch deine IP-Adresse und die Angaben zur App (Name und Version). Was sonst übertragen wird, steht bei jedem Dienst. Rechtsgrundlage ist Art. 6 Abs. 1 Buchstabe b DSGVO, weil du die jeweilige Funktion nutzen willst. Für die Zugriffsprotokolle des Passo-Dienstes gilt Art. 6 Abs. 1 Buchstabe f DSGVO; das berechtigte Interesse ist ein sicherer Betrieb.</p>
+
+  <h3>Passo-Dienst</h3>
+  <p>Ein kleiner Dienst des Betreibers. Er läuft auf einem eigenen Server in Deutschland und ist über Cloudflare erreichbar (siehe unten). Er hat drei Aufgaben:</p>
+  <ul>
+    <li><strong>Orte am Weg:</strong> Beim Import einer Route, bei Tour-Etappen und nach dem Würfeln einer Überraschungsrunde fragt Passo zuerst hier nach Orten und Sehenswürdigkeiten. Dazu geht der Kartenausschnitt der Route an den Dienst. Der Server protokolliert diese Zugriffe mit IP-Adresse, Zeit, Adresse der Anfrage und Ergebnis und löscht die Protokolle nach 7 Tagen. Antwortet der Dienst nicht, fragt Passo die öffentlichen Overpass-Server.</li>
+    <li><strong>Strava-Anmeldung:</strong> Nur wenn du Strava verbindest. Der Dienst tauscht die Anmeldung gegen Zugangsschlüssel, erneuert sie und meldet sie bei Strava ab. Dafür gehen der Anmeldecode und die Zugangsschlüssel durch den Dienst. Er speichert sie nicht und schreibt für diese Zugriffe kein Protokoll mit IP-Adresse. Deine Fahrten laufen nie über den Dienst, sie gehen direkt an Strava.</li>
+    <li><strong>Anonyme Fehlermeldungen:</strong> Scheitert ein Upload zu Strava aus bestimmten Gründen, meldet Passo dem Dienst höchstens einmal am Tag je Fehlerart nur die Art des Fehlers, den HTTP-Status und die App-Version. Es gehen keine Fahrt, kein Konto und keine Gerätekennung mit. Du kannst das unter „Strava“ mit dem Schalter „Fehler anonym melden“ abstellen.</li>
+  </ul>
+
+  <h3>Cloudflare</h3>
+  <p>Anfragen an den Passo-Dienst laufen über Cloudflare, Inc., 101 Townsend St, San Francisco, CA 94107, USA. Cloudflare leitet sie weiter und schützt den Dienst vor Überlastung und Angriffen. Dabei verarbeitet Cloudflare die IP-Adresse und die Angaben der Anfrage, auch in den USA. Cloudflare ist nach dem EU-US Data Privacy Framework zertifiziert. Rechtsgrundlage ist Art. 6 Abs. 1 Buchstabe f DSGVO; das berechtigte Interesse ist ein sicherer und erreichbarer Dienst. Einzelheiten: <a href="https://www.cloudflare.com/de-de/privacypolicy/" rel="noopener">Datenschutzerklärung von Cloudflare</a>.</p>
+
+  <h3>OpenStreetMap Overpass</h3>
+  <p>Ersatzweise, wenn der Passo-Dienst nicht antwortet, und für Orte außerhalb seines Gebiets: overpass-api.de, dann overpass.private.coffee. Dorthin geht der Kartenausschnitt der Route.</p>
+
+  <h3>Wikipedia und Wikidata</h3>
+  <p>Beim Import und nach dem Würfeln einer Überraschungsrunde holt Passo Texte, Bilder und Fakten zu Orten am Weg. Dorthin gehen die Namen und Kennungen dieser Orte und, wenn ein Ort keinen Artikel nennt, seine Koordinaten. Betreiber ist die Wikimedia Foundation, Inc., USA (<a href="https://foundation.wikimedia.org/wiki/Policy:Privacy_policy/de" rel="noopener">Datenschutzerklärung</a>).</p>
+
+  <h3>Open-Meteo</h3>
+  <p>Beim Import und für die Überraschungsrunde fragt Passo Höhen ab. Dorthin gehen Punkte der Route. Betreiber ist Open-Meteo, Schweiz.</p>
+
+  <h3>OpenFreeMap</h3>
+  <p>Für die Karte, sobald sie angezeigt wird, und für die Offline-Karte nach einem Import oder Würfeln. Dorthin geht, welcher Kartenausschnitt geladen wird.</p>
+
+  <h3>brouter.de und Nominatim</h3>
+  <p>Nur für die Überraschungsrunde. brouter.de berechnet die Strecke; dorthin gehen der Startpunkt und die Wegpunkte. Nominatim (OpenStreetMap Foundation) nennt den Ortsnamen zum Startpunkt und findet Orte, wenn du suchst; dorthin gehen der Suchtext und ein auf etwa 1 km gerundeter Punkt. Passo speichert den Suchtext nicht.</p>
+
+  <h3>Strava</h3>
+  <p>Nur wenn du Strava verbindest. Passo lädt deine Fahrten als FIT-Datei zu Strava hoch, automatisch nach der Fahrt oder von Hand, je nachdem, was du einstellst. Die Datei enthält Zeit, die Positionen der gefahrenen Route, Geschwindigkeit, Leistung, Trittfrequenz und, wenn du einen Pulsgurt nutzt, die Herzfrequenz. Passo liest nichts aus deinem Strava-Konto. Auf dem Gerät speichert Passo die Anmeldung im Schlüsselbund, welche Fahrten schon hochgeladen sind und höchstens 7 Tage die Nummer der Aktivität. Betreiber ist Strava, Inc., USA (<a href="https://www.strava.com/legal/privacy" rel="noopener">Datenschutzerklärung</a>). Du kannst die Verbindung in Passo jederzeit trennen.</p>
+
+  <h2>Funktionen von Apple</h2>
+  <ul>
+    <li><strong>Standort:</strong> Nur wenn du bei der Überraschungsrunde „Vom aktuellen Standort“ antippst, einmal und ungefähr. Passo rundet ihn auf etwa 1 km und speichert ihn nicht als Standort. Fährst du die Runde, beginnt die gespeicherte Route dort.</li>
+    <li><strong>Apple Health:</strong> Damit eine Fahrt bei gesperrtem Bildschirm weiterläuft, startet Passo eine Trainingssitzung von Apple Health. Passo schreibt dabei nichts in Health und liest nichts aus Health.</li>
+    <li><strong>TestFlight und App Store:</strong> Apple stellt die App bereit. Wenn du in TestFlight Feedback oder einen Absturzbericht sendest, bekommt der Betreiber ihn über Apple. Dafür gelten die Datenschutzbestimmungen von Apple.</li>
+  </ul>
+
+  <h2>Speicherdauer</h2>
+  <p>Daten auf deinem Gerät bleiben, bis du sie in Passo löschst oder die App entfernst. Zugriffsprotokolle des Passo-Dienstes werden nach 7 Tagen gelöscht. Anonyme Fehlermeldungen enthalten keine Angaben zu Personen.</p>
+
+  <h2>Deine Rechte</h2>
+  <p>Du hast das Recht auf Auskunft über deine Daten, auf Berichtigung, Löschung und Einschränkung der Verarbeitung, auf Datenübertragbarkeit sowie das Recht, einer Verarbeitung zu widersprechen, die auf Art. 6 Abs. 1 Buchstabe f DSGVO beruht. Dafür genügt eine E-Mail an die Adresse oben. Außerdem kannst du dich bei einer Datenschutz-Aufsichtsbehörde beschweren. Weil der Betreiber außer den Zugriffsprotokollen keine Daten von dir hat, kann er eine Auskunft meist nur für diese 7 Tage geben.</p>
+
+  <p class="stand">Stand: November 2026</p>
+</Textseite>

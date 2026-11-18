@@ -3,7 +3,7 @@
 // Der Text ist ein Entwurf und keine Rechtsberatung.
 import Textseite from '../bausteine/Textseite.astro';
 import Angabe from '../bausteine/Angabe.astro';
-import { einstellungen, ladeKnopf } from '../einstellungen';
+import { einstellungen, ladeKnopf, pfad } from '../einstellungen';
 const { impressum, kontaktEmail } = einstellungen;
 const appStore = ladeKnopf().text === 'Im App Store laden';
 ---
@@ -20,7 +20,7 @@ const appStore = ladeKnopf().text === 'Im App Store laden';
     <li>Schriften, Bilder und der Film liegen auf dieser Seite selbst, nicht bei fremden Diensten.</li>
     <li>Beim Aufruf fallen nur die Zugriffsdaten an, die der Hoster zum Ausliefern braucht.</li>
   </ul>
-  <p>Diese Erklärung gilt für die Webseite, nicht für die App.</p>
+  <p>Diese Erklärung gilt für die Webseite. Für die App gilt die <a href={pfad('/datenschutz-app/')}>Datenschutzerklärung der App</a>.</p>
 
   <h2>Verantwortlich</h2>
   <address>
