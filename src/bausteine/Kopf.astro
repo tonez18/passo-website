@@ -3,7 +3,7 @@
 import Zeichen from './Zeichen.astro';
 import ThemaSchalter from './ThemaSchalter.astro';
 import LadeKnopf from './LadeKnopf.astro';
-import { pfad } from '../einstellungen';
+import { einstellungen, pfad } from '../einstellungen';
 interface Props {
   /** Pfad der Seite, z. B. '/plaene/'. */
   pfadname: string;
@@ -22,7 +22,7 @@ const start = pfad('/');
     {position && <span class="pos num" id="pos" aria-hidden="true"><i></i><span id="posT">{position}</span></span>}
     <nav class="nav" id="nav" aria-label="Hauptmenü">
       <a href={start + '#funktionen'}>Funktionen</a>
-      <a href={pfad('/plaene/')} aria-current={pfadname.startsWith('/plaene/') ? 'page' : undefined}>Pläne</a>
+      {einstellungen.plaeneZeigen && <a href={pfad('/plaene/')} aria-current={pfadname.startsWith('/plaene/') ? 'page' : undefined}>Pläne</a>}
       <a href={start + '#unterstuetzen'}>Unterstützen</a>
       <ThemaSchalter />
     </nav>

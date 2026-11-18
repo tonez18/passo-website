@@ -14,7 +14,7 @@ const kontakt = einstellungen.kontaktEmail ? 'mailto:' + einstellungen.kontaktEm
         <p class="foot-t">Echte Strecken und Trainings für deinen Smart-Trainer. Kostenlos, ohne Konto, ohne Abo.</p>
       </div>
       <nav aria-label="Fußmenü">
-        <a href={pfad('/plaene/')}>Pläne</a>
+        {einstellungen.plaeneZeigen && <a href={pfad('/plaene/')}>Pläne</a>}
         <a href={start + '#unterstuetzen'}>Unterstützen</a>
         <a href={pfad('/impressum/')}>Impressum</a>
         <a href={pfad('/datenschutz/')}>Datenschutz</a>

@@ -3,11 +3,12 @@
 import Seite from '../layouts/Seite.astro';
 import KartenKopf from '../bausteine/KartenKopf.astro';
 import Knopf from '../bausteine/Knopf.astro';
-import { pfad } from '../einstellungen';
+import { einstellungen, pfad } from '../einstellungen';
+const plaene = einstellungen.plaeneZeigen;
 ---
 <Seite
   titel="Seite nicht gefunden | Passo"
-  beschreibung="Diese Seite gibt es nicht. Zurück zur Startseite oder zu den Trainingsplänen."
+  beschreibung={plaene ? 'Diese Seite gibt es nicht. Zurück zur Startseite oder zu den Trainingsplänen.' : 'Diese Seite gibt es nicht. Zurück zur Startseite oder zu den Funktionen.'}
   pfadname="/404.html"
   ohneIndex
 >
@@ -19,7 +20,9 @@ import { pfad } from '../einstellungen';
       <p class="sub">Die Seite gibt es nicht oder nicht mehr. Zurück auf die Route kommst du hier:</p>
       <div class="cta">
         <Knopf href={pfad('/')}>Zur Startseite</Knopf>
-        <Knopf href={pfad('/plaene/')} art="neben">Zu den Plänen</Knopf>
+        {plaene
+          ? <Knopf href={pfad('/plaene/')} art="neben">Zu den Plänen</Knopf>
+          : <Knopf href={pfad('/') + '#funktionen'} art="neben">Zu den Funktionen</Knopf>}
       </div>
     </div>
   </KartenKopf>

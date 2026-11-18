@@ -34,5 +34,5 @@ const { impressum, kontaktEmail } = einstellungen;
   <p>Diese Seite verlinkt auf fremde Seiten, zum Beispiel für den Download der App und für Spenden. Für deren Inhalte sind allein ihre Betreiber verantwortlich. Fällt dir ein Link auf, der nicht in Ordnung ist, schreib eine E-Mail; er wird dann geprüft und entfernt.</p>
 
   <h2>Urheberrecht</h2>
-  <p>Texte, Bilder, Illustrationen und der Film auf dieser Seite sind urheberrechtlich geschützt; alle Rechte vorbehalten. Die <a href={pfad('/plaene/')}>Trainingspläne</a> darfst du für dein eigenes Training laden und in Passo nutzen. Die Schrift Inter steht unter der SIL Open Font License.</p>
+  <p>Texte, Bilder, Illustrationen und der Film auf dieser Seite sind urheberrechtlich geschützt; alle Rechte vorbehalten.{einstellungen.plaeneZeigen && <> Die <a href={pfad('/plaene/')}>Trainingspläne</a> darfst du für dein eigenes Training laden und in Passo nutzen.</>} Die Schrift Inter steht unter der SIL Open Font License.</p>
 </Textseite>

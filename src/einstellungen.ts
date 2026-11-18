@@ -12,6 +12,12 @@ export const einstellungen = {
   testflightUrl: 'https://testflight.apple.com/join/rGhp1TFk',
   /** App-Store-Link; ist er gesetzt, ersetzt er den TestFlight-Link. */
   appStoreUrl: '',
+  /**
+   * Fertige Trainingspläne zeigen (Menü, Startseite, Fragen). Für die Beta aus: Passo testet erst die Grundfunktionen
+   * (Entscheidung 2026-11-18). Die Planseiten liegen solange in src/pages/_plaene/ und werden nicht gebaut; zum
+   * Einschalten den Ordner zurück in src/pages/plaene/ umbenennen und hier true setzen.
+   */
+  plaeneZeigen: false,
   /** Ko-fi-Seite für Spenden. */
   kofiUrl: 'https://ko-fi.com/passocycling',
   kontaktEmail: 'hallo@domi-speh.de',

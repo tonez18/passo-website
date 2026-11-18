@@ -14,6 +14,10 @@ import Spendenkarte from '../bausteine/Spendenkarte.astro';
 import Fragen from '../bausteine/Fragen.astro';
 import Passhoehe from '../bausteine/Passhoehe.astro';
 import { fragen } from '../daten/fragen';
+import { einstellungen } from '../einstellungen';
+// Ohne Pläne (Beta) fehlt Wegpunkt 4; die folgenden rücken nach.
+const plaene = einstellungen.plaeneZeigen;
+const wegpunkt = (n: number) => `Wegpunkt ${plaene || n < 4 ? n : n - 1}`;
 import { pfad, absolut } from '../einstellungen';
 
 import passTabletD from '../bilder/dunkel/pass-tablet.png';
@@ -114,10 +118,10 @@ const jsonLd = [
         <svg slot="stempel" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19c0-5 4-3 6-6s-1-5 3-6 5 1 5 1"/><circle cx="5" cy="19" r="1.6" fill="currentColor"/><circle cx="19" cy="8" r="1.6" fill="currentColor"/></svg>
         Hol dir deine Route aus Komoot &amp; Co. Passo zeigt Karte und Höhenprofil, kündigt den nächsten Anstieg an, und dein Trainer stellt die Steigung.
       </Funktionsblock>
-      <Funktionsblock reihe={1} blatt="Blatt 2 · B1" ausschnitt="520 20 520 390" ebenen={[1, 2]} stichwort="Training" titel="Trainings und Pläne">
+      <Funktionsblock reihe={1} blatt="Blatt 2 · B1" ausschnitt="520 20 520 390" ebenen={[1, 2]} stichwort="Training" titel={plaene ? 'Trainings und Pläne' : 'Strukturierte Trainings'}>
         <Geraet slot="geraet" art="telefon" dunkel={workoutD} hell={workoutH} {...telefonKarte} alt="Training „Sweet Spot 3 × 12“ mit Zielwatt 233 und Ist-Watt 236" />
         <svg slot="stempel" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="13" width="3.6" height="7" rx="1"/><rect x="8" y="6" width="3.6" height="14" rx="1"/><rect x="13" y="11" width="3.6" height="9" rx="1"/><rect x="18" y="4" width="3.6" height="16" rx="1"/></svg>
-        Bau Intervalle selbst oder nimm ein fertiges Training; der Trainer hält die Watt. Pläne legen die Einheiten in deinen Kalender.
+        Bau Intervalle selbst oder nimm ein fertiges Training; der Trainer hält die Watt.{plaene && ' Pläne legen die Einheiten in deinen Kalender.'}
       </Funktionsblock>
       <Funktionsblock reihe={2} blatt="Blatt 3 · C2" ausschnitt="1080 520 520 390" ebenen={[0, 1, 2]} stichwort="Schon dabei" titel="Pässe und Radwege">
         <Geraet slot="geraet" art="telefon" dunkel={stelvioD} {...telefonKarte} alt="Pass „Stilfser Joch“: 2.757 m, 24,4 km, 1.864 Höhenmeter, mit Höhenprofil" />
@@ -162,7 +166,8 @@ const jsonLd = [
     </div>
   </section>
 
-  <!-- 5 Fertige Pläne -->
+  <!-- 5 Fertige Pläne (nur mit einstellungen.plaeneZeigen) -->
+  {plaene && (
   <section class="sec wrap" id="plaene">
     <header class="sh rv">
       <Wegpunkt zeichen="gipfel" name="Wegpunkt 4" km={12.5} hoehe={1870} steigung={8.5} />
@@ -171,11 +176,12 @@ const jsonLd = [
     </header>
     <Planvorschau />
   </section>
+  )}
 
   <!-- 6 Was du brauchst -->
   <section class="sec wrap" id="geraete">
     <header class="sh rv">
-      <Wegpunkt zeichen="ort" name="Wegpunkt 5" km={15.8} hoehe={2095} steigung={6.8} />
+      <Wegpunkt zeichen="ort" name={wegpunkt(5)} km={15.8} hoehe={2095} steigung={6.8} />
       <h2>Was du brauchst</h2>
       <p class="lead">Die Packliste ist kurz. Zwei Dinge sind Pflicht, der Rest ist Zugabe.</p>
     </header>
@@ -185,7 +191,7 @@ const jsonLd = [
   <!-- 7 Unterstützen -->
   <section class="sec wrap" id="unterstuetzen">
     <header class="sh rv">
-      <Wegpunkt zeichen="aussicht" name="Wegpunkt 6" km={18.6} hoehe={2330} steigung={8.4} />
+      <Wegpunkt zeichen="aussicht" name={wegpunkt(6)} km={18.6} hoehe={2330} steigung={8.4} />
       <h2>Unterstützen</h2>
     </header>
     <Spendenkarte />
@@ -194,7 +200,7 @@ const jsonLd = [
   <!-- 8 Fragen und Antworten -->
   <section class="sec wrap" id="fragen">
     <header class="sh rv">
-      <Wegpunkt zeichen="ort" name="Wegpunkt 7" km={21.7} hoehe={2560} steigung={7.4} />
+      <Wegpunkt zeichen="ort" name={wegpunkt(7)} km={21.7} hoehe={2560} steigung={7.4} />
       <h2>Fragen und Antworten</h2>
     </header>
     <Fragen fragen={fragen} />

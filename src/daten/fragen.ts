@@ -2,7 +2,9 @@
 // Antworten nur aus dem, was Specs und App belegen.
 export interface Frage { frage: string; antwort: string }
 
-export const fragen: Frage[] = [
+import { einstellungen } from '../einstellungen';
+
+const alleFragen: Frage[] = [
   { frage: 'Was kostet Passo?', antwort: 'Nichts. Es gibt kein Abo und keine Käufe in der App. Wenn dir Passo gefällt, kannst du freiwillig spenden.' },
   { frage: 'Brauche ich ein Konto?', antwort: 'Nein. Du lädst die App, verbindest deinen Trainer und fährst. Ein Strava-Konto brauchst du nur, wenn du Fahrten dorthin hochladen willst.' },
   { frage: 'Welche Trainer gehen?', antwort: 'Smart-Trainer, die über Bluetooth das Protokoll FTMS sprechen. Ob deiner das kann, steht im Datenblatt des Herstellers.' },
@@ -11,3 +13,6 @@ export const fragen: Frage[] = [
   { frage: 'Gibt es Passo für Android?', antwort: 'Derzeit nicht. Passo gibt es für iPhone, iPad und Apple TV.' },
   { frage: 'Wie kommt ein Plan in die App?', antwort: 'Lade die Plandatei (.passoplan) von der Planseite und öffne sie mit Passo. Dann wählst du deine Trainingstage, und die Einheiten stehen im Kalender.' },
 ];
+
+/** Die Frage nach Plänen nur, solange die Webseite Pläne zeigt. */
+export const fragen: Frage[] = alleFragen.filter((f) => einstellungen.plaeneZeigen || !f.frage.includes('Plan'));
