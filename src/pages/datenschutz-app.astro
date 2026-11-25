@@ -2,6 +2,8 @@
 // Datenschutzerklärung der App Passo (für TestFlight, App Store und die Strava-API-Richtlinie 7.3).
 // Angaben zum Verantwortlichen aus src/einstellungen.ts. Der Text ist ein Entwurf und keine Rechtsberatung.
 // Muss zum Stand der App passen: docs/eigener-server.md und lib/l10n/app_de.arb (privacy*) im App-Repository.
+// Abschnitt Community: server/lib/src/db/schema.dart, store/visibility.dart, deleteAccount, docs/community-server.md.
+// Diese Seite ist zugleich die PRIVACY_URL des Community-Servers „Passo“.
 import Textseite from '../bausteine/Textseite.astro';
 import Angabe from '../bausteine/Angabe.astro';
 import { einstellungen, pfad } from '../einstellungen';
@@ -9,14 +11,15 @@ const { impressum, kontaktEmail } = einstellungen;
 ---
 <Textseite
   titel="Datenschutz in der App | Passo"
-  beschreibung="Datenschutz in der App Passo: kein Konto, kein Tracking. Welche Dienste die App wann fragt und welche Daten dabei anfallen."
+  beschreibung="Datenschutz in der App Passo: kein Kontozwang, kein Tracking. Welche Dienste die App wann fragt und welche Daten dabei anfallen."
   pfadname="/datenschutz-app/"
   blatt="Blatt 5 · Rechtliches"
   ueberschrift="Datenschutz in der App"
 >
   <h2>Kurz gesagt</h2>
   <ul>
-    <li>Passo braucht kein Konto. Deine Routen, Trainings, Fahrten und Profile bleiben auf deinem Gerät.</li>
+    <li>Passo braucht kein Konto. Deine Routen, Trainings, Fahrten und Profile bleiben auf deinem Gerät, solange du nichts davon selbst teilst.</li>
+    <li>Die Community ist freiwillig. Erst wenn du einem Community-Server beitrittst, entsteht dort ein Konto. Was dann übertragen wird, steht im Abschnitt „Community“.</li>
     <li>Passo misst nicht, wie du die App nutzt, zeigt keine Werbung und gibt nichts an Werbe- oder Analysedienste weiter.</li>
     <li>Ins Internet geht die App nur für bestimmte Aufgaben, etwa wenn du eine Route importierst, eine Überraschungsrunde würfelst, Karten anzeigst oder Strava verbindest. Welche Dienste das sind, steht unten.</li>
   </ul>
@@ -32,7 +35,7 @@ const { impressum, kontaktEmail } = einstellungen;
   </address>
 
   <h2>Was auf deinem Gerät bleibt</h2>
-  <p>Routen, Trainings, Trainingspläne, Fahrten, Profile mit Name und Bild, Zonen und Einstellungen speichert Passo nur auf deinem Gerät. Der Betreiber kann darauf nicht zugreifen.</p>
+  <p>Routen, Trainings, Trainingspläne, Fahrten, Profile mit Name und Bild, Zonen und Einstellungen speichert Passo auf deinem Gerät. Der Betreiber kann darauf nicht zugreifen. Ausnahmen sind nur die Daten, die du mit Strava oder der Community teilst (siehe unten).</p>
   <ul>
     <li><strong>Sichern:</strong> Eine Sicherung ist eine Datei, die du selbst über das Teilen-Menü ablegst, zum Beispiel in iCloud Drive oder in Dateien.</li>
     <li><strong>Geräte abgleichen:</strong> iPhone und iPad gleichen sich direkt in deinem WLAN ab, ohne Server dazwischen.</li>
@@ -52,7 +55,7 @@ const { impressum, kontaktEmail } = einstellungen;
   </ul>
 
   <h3>Cloudflare</h3>
-  <p>Anfragen an den Passo-Dienst laufen über Cloudflare, Inc., 101 Townsend St, San Francisco, CA 94107, USA. Cloudflare leitet sie weiter und schützt den Dienst vor Überlastung und Angriffen. Dabei verarbeitet Cloudflare die IP-Adresse und die Angaben der Anfrage, auch in den USA. Cloudflare ist nach dem EU-US Data Privacy Framework zertifiziert. Rechtsgrundlage ist Art. 6 Abs. 1 Buchstabe f DSGVO; das berechtigte Interesse ist ein sicherer und erreichbarer Dienst. Einzelheiten: <a href="https://www.cloudflare.com/de-de/privacypolicy/" rel="noopener">Datenschutzerklärung von Cloudflare</a>.</p>
+  <p>Anfragen an den Passo-Dienst und an den Community-Server „Passo“ laufen über Cloudflare, Inc., 101 Townsend St, San Francisco, CA 94107, USA. Cloudflare leitet sie weiter und schützt den Dienst vor Überlastung und Angriffen. Dabei verarbeitet Cloudflare die IP-Adresse und den Inhalt der Anfragen und Antworten, auch in den USA; die verschlüsselte Verbindung deines Geräts endet bei Cloudflare. Cloudflare ist nach dem EU-US Data Privacy Framework zertifiziert. Rechtsgrundlage ist Art. 6 Abs. 1 Buchstabe f DSGVO; das berechtigte Interesse ist ein sicherer und erreichbarer Dienst. Einzelheiten: <a href="https://www.cloudflare.com/de-de/privacypolicy/" rel="noopener">Datenschutzerklärung von Cloudflare</a>.</p>
 
   <h3>OpenStreetMap Overpass</h3>
   <p>Ersatzweise, wenn der Passo-Dienst nicht antwortet, und für Orte außerhalb seines Gebiets: overpass-api.de, dann overpass.private.coffee. Dorthin geht der Kartenausschnitt der Route.</p>
@@ -72,6 +75,37 @@ const { impressum, kontaktEmail } = einstellungen;
   <h3>Strava</h3>
   <p>Nur wenn du Strava verbindest. Passo lädt deine Fahrten als FIT-Datei zu Strava hoch, automatisch nach der Fahrt oder von Hand, je nachdem, was du einstellst. Die Datei enthält Zeit, die Positionen der gefahrenen Route, Geschwindigkeit, Leistung, Trittfrequenz und, wenn du einen Pulsgurt nutzt, die Herzfrequenz. Passo liest nichts aus deinem Strava-Konto. Auf dem Gerät speichert Passo die Anmeldung im Schlüsselbund, welche Fahrten schon hochgeladen sind und höchstens 7 Tage die Nummer der Aktivität. Betreiber ist Strava, Inc., USA (<a href="https://www.strava.com/legal/privacy" rel="noopener">Datenschutzerklärung</a>). Du kannst die Verbindung in Passo jederzeit trennen.</p>
 
+  <h2>Community</h2>
+  <p>Die Community ist ein freiwilliger Zusatz. Ohne Beitritt fragt Passo keinen Community-Server. Es gibt den Server „Passo“ des oben genannten Verantwortlichen, für den dieser Abschnitt gilt, und Server, die andere selbst betreiben. Für einen fremden Server ist dessen Betreiber verantwortlich. Wer das ist und wo seine Datenschutzerklärung steht, zeigt die App vor dem Beitritt.</p>
+
+  <h3>Was der Server speichert</h3>
+  <ul>
+    <li><strong>Konto:</strong> dein Name, dein Profilbild oder deine Figur, deine Einstellungen zum Teilen, der Zeitpunkt des Beitritts, wer dich eingeladen hat, und dein Freundescode. Eine E-Mail-Adresse oder ein Passwort gibt es nicht.</li>
+    <li><strong>Geräte:</strong> der Name jedes verbundenen Geräts, sein öffentlicher Schlüssel, wann es dazukam und wann es zuletzt verbunden war. Der private Schlüssel bleibt im Schlüsselbund deines Geräts. Geräte- und Wiederherstellungscodes speichert der Server nur als Prüfwert.</li>
+    <li><strong>Geteilte Fahrten:</strong> eine Zusammenfassung mit Kennung, Art, Titel, Startzeit, Strecke, Höhenmetern, Fahrzeit, Höhenprofil und der Form der Strecke. Die Form ist eine vereinfachte Linie ohne Koordinaten. Der Titel kann einen Ortsnamen enthalten, wenn die Route so heißt. Mittlere Leistung und Arbeit gehen nur mit, wenn „Leistung zeigen“ an ist, der mittlere Puls nur, wenn „Puls zeigen“ an ist. Vor dem Beitritt zeigt dir Passo diese Schalter: „Fahrten automatisch teilen“ und „Leistung zeigen“ sind vorausgewählt, „Puls zeigen“ nicht. Du kannst sie dort und später jederzeit ändern. Automatisch geteilt werden nur Fahrten nach dem Einschalten, ältere teilst du einzeln.</li>
+    <li><strong>Miteinander:</strong> Freundschaften und Anfragen, Anfeuern, Kommentare, erzeugte und benutzte Einladungen, und wen du blockierst.</li>
+    <li><strong>Meldungen:</strong> was du meldest, der Grund und dein Text dazu.</li>
+  </ul>
+
+  <h3>Wer was sieht</h3>
+  <ul>
+    <li><strong>Deine Fahrten</strong> sehen du und deine Freunde, ebenso, wer sie angefeuert und kommentiert hat.</li>
+    <li><strong>Deinen Namen</strong> sehen alle Mitglieder in der Mitgliederliste. Mit „In der Mitgliederliste zeigen“ kannst du das abschalten. Wer deinen Freundeslink hat, sieht deinen Namen auch dann.</li>
+    <li><strong>Dein Profilbild</strong> sehen Mitglieder, die dich sehen können. Mit „Profilbild zeigen“ kannst du das abschalten.</li>
+    <li><strong>Der Betreiber</strong> sieht in der Verwaltung die Konten, die Einladungen und gemeldete Inhalte. Er kann Inhalte entfernen und Konten sperren.</li>
+    <li><strong>Blockierte Mitglieder</strong> und du seht einander nicht mehr.</li>
+  </ul>
+  <p>Der Server „Passo“ gibt diese Daten nicht weiter und wertet sie nicht für Werbung aus.</p>
+
+  <h3>Technik</h3>
+  <p>Der Server steht in Deutschland und ist über Cloudflare erreichbar (siehe oben). Deine IP-Adresse nutzt er nur kurz im Arbeitsspeicher, um zu viele Anfragen abzuwehren. Die Zugriffsprotokolle enthalten keine IP-Adresse, sondern Zeit, Pfad der Anfrage und Ergebnis. Der Pfad kann die Kennung eines Kontos oder einer Fahrt oder einen Freundes- oder Einladungscode enthalten. Alte Einträge werden laufend überschrieben.</p>
+
+  <h3>Rechtsgrundlage</h3>
+  <p>Konto, geteilte Fahrten und Freunde: Art. 6 Abs. 1 Buchstabe b DSGVO, weil du die Community nutzen willst. Der Puls ist ein Gesundheitswert; ihn verarbeitet der Server nur mit deiner ausdrücklichen Einwilligung (Art. 9 Abs. 2 Buchstabe a DSGVO), die du mit dem Schalter „Puls zeigen“ gibst. Du kannst sie jederzeit widerrufen, indem du ihn ausschaltest. Der Server entfernt den Puls dann auch aus schon geteilten Fahrten. Dasselbe gilt für Leistung und Arbeit bei „Leistung zeigen“. Meldungen, Sperren, Schutz vor Überlastung und Protokolle: Art. 6 Abs. 1 Buchstabe f DSGVO; das berechtigte Interesse ist ein sicherer und respektvoller Umgang.</p>
+
+  <h3>Löschen</h3>
+  <p>Eine geteilte Fahrt kannst du jederzeit zurückziehen, einen Kommentar löschen. Der Server merkt sich bei einer zurückgezogenen Fahrt nur ihre Kennung, damit sie nicht von selbst wieder geteilt wird. „Konto löschen“ unter „Mehr › Community“ entfernt dein Konto mit Profilbild, Geräten, Fahrten, Freundschaften, Anfeuern, Kommentaren, Einladungen und Meldungen sofort vom Server. Bei einer Einladung, die du benutzt hast, bleibt nur stehen, dass sie benutzt wurde. In Sicherungskopien können die Daten noch bis zu 4 Wochen enthalten sein; danach sind auch diese überschrieben. Abmelden allein löscht dein Konto nicht.</p>
+
   <h2>Funktionen von Apple</h2>
   <ul>
     <li><strong>Standort:</strong> Nur wenn du bei der Überraschungsrunde „Vom aktuellen Standort“ antippst, einmal und ungefähr. Passo rundet ihn auf etwa 1 km und speichert ihn nicht als Standort. Fährst du die Runde, beginnt die gespeicherte Route dort.</li>
@@ -80,10 +114,10 @@ const { impressum, kontaktEmail } = einstellungen;
   </ul>
 
   <h2>Speicherdauer</h2>
-  <p>Daten auf deinem Gerät bleiben, bis du sie in Passo löschst oder die App entfernst. Zugriffsprotokolle des Passo-Dienstes werden nach 7 Tagen gelöscht. Anonyme Fehlermeldungen enthalten keine Angaben zu Personen.</p>
+  <p>Daten auf deinem Gerät bleiben, bis du sie in Passo löschst oder die App entfernst. Zugriffsprotokolle des Passo-Dienstes werden nach 7 Tagen gelöscht. Anonyme Fehlermeldungen enthalten keine Angaben zu Personen. Daten auf dem Community-Server bleiben, bis du sie oder dein Konto löschst (siehe „Community“).</p>
 
   <h2>Deine Rechte</h2>
-  <p>Du hast das Recht auf Auskunft über deine Daten, auf Berichtigung, Löschung und Einschränkung der Verarbeitung, auf Datenübertragbarkeit sowie das Recht, einer Verarbeitung zu widersprechen, die auf Art. 6 Abs. 1 Buchstabe f DSGVO beruht. Dafür genügt eine E-Mail an die Adresse oben. Außerdem kannst du dich bei einer Datenschutz-Aufsichtsbehörde beschweren. Weil der Betreiber außer den Zugriffsprotokollen keine Daten von dir hat, kann er eine Auskunft meist nur für diese 7 Tage geben.</p>
+  <p>Du hast das Recht auf Auskunft über deine Daten, auf Berichtigung, Löschung und Einschränkung der Verarbeitung, auf Datenübertragbarkeit sowie das Recht, einer Verarbeitung zu widersprechen, die auf Art. 6 Abs. 1 Buchstabe f DSGVO beruht. Dafür genügt eine E-Mail an die Adresse oben. Außerdem kannst du dich bei einer Datenschutz-Aufsichtsbehörde beschweren. Eine Einwilligung kannst du jederzeit für die Zukunft widerrufen. Nutzt du die Community nicht, hat der Betreiber außer den Zugriffsprotokollen keine Daten von dir und kann eine Auskunft meist nur für diese 7 Tage geben. Geht es um die Community, nenne bitte deinen Namen dort; weil das Konto keine E-Mail-Adresse hat, kann der Betreiber dich sonst nicht zuordnen.</p>
 
   <p class="stand">Stand: November 2026</p>
 </Textseite>
